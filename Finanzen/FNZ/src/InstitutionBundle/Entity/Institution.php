@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use InstitutionBundle\Model\ExtendInstitution;
-
+use Oro\Bundle\AddressBundle\Entity\Address;
 /**
  * This entity represents a institution of a system
  *
@@ -115,6 +115,21 @@ class Institution extends ExtendInstitution
      * )
      */
     protected $iban;
+
+    /**
+     * @var Address
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address")
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $address;
 
     /**
      * Get the value of Id
@@ -232,6 +247,31 @@ class Institution extends ExtendInstitution
     public function setIban($iban)
     {
         $this->iban = $iban;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of Address
+     *
+     * @return Address
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set the value of Address
+     *
+     * @param Address address
+     *
+     * @return self
+     */
+    public function setAddress(Address $address)
+    {
+        $this->address = $address;
 
         return $this;
     }
