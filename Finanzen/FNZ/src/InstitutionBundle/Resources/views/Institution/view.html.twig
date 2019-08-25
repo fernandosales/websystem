@@ -1,0 +1,60 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+{% block navButtons %}
+    {% if is_granted('EDIT', entity) %}
+        {{ UI.editButton({
+            'path' : path('institution.institution_update', { id: entity.id }),
+            'entity_label': 'institution.entity_label'|trans
+        }) }}
+    {% endif %}
+
+    {% if is_granted('DELETE', entity) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('institution_api_delete_institution', {'id': entity.id}),
+            'dataRedirect': path('institution.institution_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-institution',
+            'dataId': entity.id,
+            'entity_label': 'institution.entity_label'|trans
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity':      entity,
+        'indexPath':   path('institution.institution_index'),
+        'indexLabel': 'institution.entity_plural_label'|trans,
+        'entityTitle': entity.name
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+                    {{ UI.renderProperty('institution.name.label'|trans,          entity.name) }}
+                    {{ UI.renderProperty('institution.branch_number.label'|trans, entity.branchNumber) }}
+                    {{ UI.renderProperty('institution.iban.label'|trans,          entity.iban) }}
+                    {{ UI.renderProperty('institution.bic.label'|trans,           entity.bic) }}
+                </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+        {
+            'title': 'Data'|trans,
+            'class': 'active',
+            'subblocks': [
+                { 'data' : [data] }
+            ]
+        }
+    ] %}
+
+    {% set id = 'institutionView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

@@ -1,0 +1,14 @@
+institution_bundle:
+    resource: "@InstitutionBundle/Controller"
+    type: annotation
+    prefix: /institution
+
+institution_api_institution:
+    resource: "@InstitutionBundle/Controller/Api/Rest/InstitutionController.php"
+    type: rest
+    prefix: api/rest/{version}/
+    requirements:
+        version: latest|v1
+        _format: json
+    defaults:
+        version: latest

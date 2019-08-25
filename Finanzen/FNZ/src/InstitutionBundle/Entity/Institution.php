@@ -3,19 +3,20 @@
 namespace InstitutionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use InstitutionBundle\Model\ExtendInstitution;
 use JMS\Serializer\Annotation as JMS;
+use Oro\Bundle\AddressBundle\Entity\Address;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
-use InstitutionBundle\Model\ExtendInstitution;
-use Oro\Bundle\AddressBundle\Entity\Address;
+
 /**
  * This entity represents a institution of a system
  *
  * @ORM\Entity(repositoryClass="InstitutionBundle\Entity\Repository\InstitutionRepository")
  * @ORM\Table(name="fnz_institution")
  * @Config(
- *      routeName="fnz_institution_index",
- *      routeView="fnz_institution_view",
+ *      routeName="institution.institution_index",
+ *      routeView="institution.institution_view",
  *      defaultValues={
  *          "entity"={
  *              "icon"="fa-user"

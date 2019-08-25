@@ -1,0 +1,5 @@
+services:
+    institution.form.type.institution:
+        class: InstitutionBundle\Form\Type\InstitutionType
+        tags:
+            - { name: form.type, alias: institution_institution_type }

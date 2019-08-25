@@ -1,0 +1,11 @@
+institution:
+  entity_label: Institution
+  entity_plural_label: Institutions
+  
+  menu:
+    institution_tab.label: Institution
+
+  name.label: Name
+  branch_number.label: Branch Number
+  iban.label: IBAN
+  bic.label: BIC

@@ -1,0 +1,86 @@
+datagrids:
+    institutions-grid:
+        source:
+            acl_resource: institution.institution_view
+            type: orm
+            query:
+                select:
+                    - i.id
+                    - i.name
+                    - i.branchNumber
+                    - i.iban
+                    - i.bic
+                from:
+                    - { table: InstitutionBundle:Institution, alias: i }
+        columns:
+            name:
+                label: institution.name.label
+            branchNumber:
+                label: institution.branch_number.label
+            iban:
+                label: institution.iban.label
+            bic:
+                label: institution.bic.label
+        properties:
+            id: ~
+            view_link:
+              type: url
+              route: institution.institution_view
+              params:
+                - id
+            update_link:
+                type: url
+                route: institution.institution_update
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: institution_api_delete_institution
+                params:
+                    - id
+        sorters:
+            columns:
+                name:
+                    data_name: i.name
+                branchNumber:
+                    data_name: i.branchNumber
+                iban:
+                    data_name: i.iban
+                bic:
+                    data_name: i.bic
+            default:
+                model: ASC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: i.name
+                branchNumber:
+                    type: string
+                    data_name: i.branchNumber
+                iban:
+                    type: string
+                    data_name: i.iban
+                bic:
+                    type: string
+                    data_name: i.bic
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  institution.institution_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  institution.institution_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  institution.institution_delete

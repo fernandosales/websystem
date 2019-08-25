@@ -1,0 +1,31 @@
+navigation:
+    menu_config:
+
+        items:
+            institution_tab:
+                label: 'institution.menu.institution_tab.label'
+                uri: '#'
+                position: 300
+                extras:
+                    icon: fa-handshake-o
+            institution_list:
+                label: 'institution.entity_plural_label'
+                route: 'institution.institution_index'
+                position: 200
+                extras:
+                    routes: ['/^institution/']
+                    description: 'institution.entity_plural_label'
+
+        tree:
+            application_menu:
+                children:
+                    institution_tab:
+                        children:
+                            institution_list: ~
+
+
+    titles:
+        institution.institution_index: 'institution.entity_label'
+        institution.institution_view:  '%name%'
+        institution.institution_update: '%name% - Edit'
+        institution.institution_create: 'Create institution'
