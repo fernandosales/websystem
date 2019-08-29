@@ -2,6 +2,8 @@
 {% import 'OroUIBundle::macros.html.twig' as UI %}
 {% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
 
+{% oro_title_set({params : {"%entityName%": entity.name }}) %}
+
 {% if form.vars.value.id %}
     {% set formAction = path('institution.institution_update', { 'id': form.vars.value.id }) %}
 {% else %}

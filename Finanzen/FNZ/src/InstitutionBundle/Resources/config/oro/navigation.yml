@@ -25,7 +25,7 @@ navigation:
 
 
     titles:
-        institution.institution_index: 'institution.entity_label'
-        institution.institution_view:  '%name%'
-        institution.institution_update: '%name% - Edit'
-        institution.institution_create: 'Create institution'
+        institution.institution_index: ~
+        institution.institution_view:  '%entityName% - oro.ui.view'
+        institution.institution_update: '%entityName% - oro.ui.edit'
+        institution.institution_create: 'oro.ui.create_entity'
