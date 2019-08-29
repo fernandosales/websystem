@@ -1,0 +1,15 @@
+
+{% block institution_institution_address_type_rows %}
+    {{ form_row(form.label) }}
+    {{ form_row(form.country) }}
+    {{ form_row(form.street) }}
+    {{ form_row(form.city) }}
+    {{ form_row(form.region_text) }}
+    {{ form_row(form.region) }}
+    {{ form_row(form.postalCode) }}
+    {{ form_rest(form) }}
+{%  endblock %}
+
+{% block institution_institution_address_type_widget %}
+    {{ block('institution_institution_address_type_rows') }}
+{% endblock %}

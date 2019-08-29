@@ -1,5 +1,6 @@
 {% extends 'OroUIBundle:actions:view.html.twig' %}
 {% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'OroAddressBundle::macros.html.twig' as address %}
 
 {% oro_title_set({params : {"%entityName%": entity.name }}) %}
 
@@ -42,13 +43,15 @@
                     {{ UI.renderProperty('institution.branch_number.label'|trans, entity.branchNumber) }}
                     {{ UI.renderProperty('institution.iban.label'|trans,          entity.iban) }}
                     {{ UI.renderProperty('institution.bic.label'|trans,           entity.bic) }}
+                    {{ UI.renderHtmlProperty('institution.address.label'|trans,   address.renderAddress(entity.address)) }}
                 </div>
             </div>
         </div>
     {% endset %}
     {% set dataBlocks = [
         {
-            'title': 'Data'|trans,
+            'title': 'institution.block.general'|trans,
+            'class': 'active',
             'class': 'active',
             'subblocks': [
                 { 'data' : [data] }

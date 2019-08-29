@@ -1,5 +1,19 @@
+parameters:
+    institution.form.type.institution_address.class: InstitutionBundle\Form\Type\InstitutionAddressType
+    institution.form.type.institution.class:         InstitutionBundle\Form\Type\InstitutionType
+
+
 services:
     institution.form.type.institution:
-        class: InstitutionBundle\Form\Type\InstitutionType
+        class: '%institution.form.type.institution.class%'
         tags:
             - { name: form.type, alias: institution_institution_type }
+
+    # Custon Address form type to Institution
+    institution.form.type.institution_address:
+        class: '%institution.form.type.institution_address.class%'
+        arguments:
+            - '@oro_address.form.listener.address'
+            - '@oro_address.form.listener.address_identifier'
+        tags:
+             - { name: form.type, alias: institution_institution_address_type }

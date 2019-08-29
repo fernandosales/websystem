@@ -1,0 +1,2 @@
+bundles:
+    - InstitutionBundle:Include:fields.html.twig

@@ -120,7 +120,7 @@ class Institution extends ExtendInstitution
     /**
      * @var Address
      *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address", cascade={"persist"})
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      * @ConfigField(
      *      defaultValues={

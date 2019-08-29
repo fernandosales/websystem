@@ -1,7 +1,9 @@
 institution:
   entity_label: Institution
   entity_plural_label: Institutions
-  
+  block:
+    general: General
+
   menu:
     institution_tab.label: Institution
 
@@ -9,3 +11,4 @@ institution:
   branch_number.label: Branch Number
   iban.label: IBAN
   bic.label: BIC
+  address.label: Address

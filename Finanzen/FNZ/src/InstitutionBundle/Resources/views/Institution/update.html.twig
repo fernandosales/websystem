@@ -1,5 +1,6 @@
 {% extends 'OroUIBundle:actions:update.html.twig' %}
 {% import 'OroUIBundle::macros.html.twig' as UI %}
+
 {% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
 
 {% oro_title_set({params : {"%entityName%": entity.name }}) %}
@@ -49,7 +50,7 @@
     {% set id = 'institution-edit' %}
 
     {% set dataBlocks = [{
-            'title': 'General'|trans,
+            'title': 'institution.block.general'|trans,
             'class': 'active',
             'subblocks': [{
                 'title': '',
@@ -58,6 +59,7 @@
                     form_row(form.branchNumber),
                     form_row(form.iban),
                     form_row(form.bic),
+                    form_row(form.address),
                 ]
             }]
         }]

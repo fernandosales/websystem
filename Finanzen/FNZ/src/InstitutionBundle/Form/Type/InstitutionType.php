@@ -3,10 +3,10 @@
 namespace InstitutionBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class InstitutionType extends AbstractType
 {
@@ -22,8 +22,11 @@ class InstitutionType extends AbstractType
             ->add('iban', TextType::class,
               ['label' => 'institution.iban.label']
             )
-            ->add('bic', TextType::class,
+            ->add('bic',    TextType::class,
               ['label' => 'institution.bic.label']
+            )
+            ->add('address', InstitutionAddressType::class,
+              ['label' => 'institution.address.label']
             )
         ;
     }
