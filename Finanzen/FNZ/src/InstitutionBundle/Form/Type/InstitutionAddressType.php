@@ -26,6 +26,7 @@ class InstitutionAddressType extends AddressType
             ->remove('nameSuffix')
             ->remove('organization')
             ->remove('street2')
+            ->remove('label')
         ;
 
     }

@@ -59,7 +59,12 @@
                     form_row(form.branchNumber),
                     form_row(form.iban),
                     form_row(form.bic),
-                    form_row(form.address),
+                    form_row(form.address.country),
+                    form_row(form.address.street),
+                    form_row(form.address.city),
+                    form_row(form.address.region),
+                    form_row(form.address.region_text),
+                    form_row(form.address.postalCode),
                 ]
             }]
         }]
