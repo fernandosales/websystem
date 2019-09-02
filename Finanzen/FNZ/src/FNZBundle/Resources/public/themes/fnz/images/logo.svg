@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="500mm"
+   height="500mm"
+   viewBox="0 0 500 500"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="logo.svg">
+  <title
+     id="title888">FNZ Logo</title>
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.12374369"
+     inkscape:cx="344.07478"
+     inkscape:cy="842.32932"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1497"
+     inkscape:window-height="925"
+     inkscape:window-x="559"
+     inkscape:window-y="57"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>FNZ Logo</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Fernando Sales  (eu@fernandosales.com.br)</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Todos os Direitos reservados a Fernando Sales</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Fernando Sales  (eu@fernandosales.com.br)</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,203)">
+    <path
+       style="fill:#75a95f;fill-opacity:1;stroke-width:0.59916455"
+       d="m 244.41918,-192.95348 c -132.93429,0 -239.9528652,107.019803 -239.9528652,239.954087 0,111.035593 74.6641362,203.990073 176.7297952,231.602523 V 27.934847 c 0,-18.897591 8.62549,-35.5261262 24.41388,-47.880421 14.81408,-11.797143 31.97472,-17.916252 50.51512,-17.916252 h 119.59878 c 4.07671,4.51e-4 7.38221,3.304669 7.38266,7.381382 V 13.26239 c -4.5e-4,4.076687 -3.30595,7.382235 -7.38266,7.382637 H 259.45023 c -5.62062,0 -7.94348,1.286537 -9.78845,3.848999 -2.34041,3.25057 -3.59596,7.163028 -3.59596,12.576965 v 78.162619 h 118.30689 c 4.07669,4e-4 7.38096,3.30592 7.38136,7.38266 v 42.63271 c -4e-4,4.07674 -3.30467,7.38096 -7.38136,7.38141 H 246.06582 v 114.32309 h 9.51376 c 132.93431,0 239.95411,-107.01862 239.95411,-239.952873 0,-132.934309 -107.0198,-239.954087 -239.95411,-239.954087 z"
+       id="rect869-3"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-441.47617"
+       y="-434.7619"
+       id="text951"><tspan
+         sodipodi:role="line"
+         id="tspan949"
+         x="-441.47617"
+         y="-425.39813"
+         style="stroke-width:0.26458332" /></text>
+  </g>
+</svg>

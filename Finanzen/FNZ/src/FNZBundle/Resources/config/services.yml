@@ -1,0 +1,8 @@
+services:
+    oro_theme.registry:
+        class: Oro\Bundle\ThemeBundle\Model\ThemeRegistry
+        arguments:
+            - '%oro_theme.settings%'
+
+    Oro\Bundle\ThemeBundle\Model\ThemeRegistry:
+        alias: oro_theme.registry

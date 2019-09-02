@@ -22,7 +22,8 @@ behat.yml
 !var/SymfonyRequirements.php
 !var/OroRequirements.php
 /build/logs/*
-/vendor
+/vendor/
+!/vendor/oro/*
 /cov
 /public/bundles
 /public/css

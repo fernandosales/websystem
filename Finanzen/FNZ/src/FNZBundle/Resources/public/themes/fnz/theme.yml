@@ -1,0 +1,5 @@
+# src/Acme/Bundle/DemoBundle/Resources/views/layouts/oro-gold/theme.yml
+label:          Nice ORO gold theme
+directory:      OroGold
+parent:         oro
+groups: [ main ]
