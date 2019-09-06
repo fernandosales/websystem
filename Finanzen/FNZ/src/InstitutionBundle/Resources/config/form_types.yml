@@ -1,6 +1,7 @@
 parameters:
     institution.form.type.institution_address.class: InstitutionBundle\Form\Type\InstitutionAddressType
     institution.form.type.institution.class:         InstitutionBundle\Form\Type\InstitutionType
+    institution.form.type.account.class:             InstitutionBundle\Form\Type\AccountType
 
 
 services:
@@ -17,3 +18,8 @@ services:
             - '@oro_address.form.listener.address_identifier'
         tags:
              - { name: form.type, alias: institution_institution_address_type }
+
+    institution.form.type.account:
+        class: '%institution.form.type.account.class%'
+        tags:
+            - { name: form.type, alias: institution_account_type }

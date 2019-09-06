@@ -1,6 +1,11 @@
 institution:
   entity_label: Institution
   entity_plural_label: Institutions
+
+  account:
+    entity_label: Account
+    entity_plural_label: Accounts
+
   block:
     general: General
 
@@ -12,3 +17,35 @@ institution:
   iban.label: IBAN
   bic.label: BIC
   address.label: Address
+
+account:
+  entity_label: Account
+  entity_plural_label: Accounts
+  block:
+    general: General
+
+  menu:
+    institution_tab.label: Account
+
+  name.label: Name
+  number.label: Number
+  currency.label: Currency
+  opening_balance.label: Opening Balance
+  minimum_balance_to_notify.label: Minimum Balance to Notify
+  opening_date.label: Opening Date
+  favorite.label: Favorite
+  accounting_type:
+    label: Accounting Type
+    choice:
+      label: Choose Accounting type
+      liability.label: Wallet
+      asset.label: Asset
+
+  type:
+    label: Type
+    choice:
+        label: Choose account type
+        wallet.label: Wallet
+        credit_card.label: Credit Card
+        current_account.label: Current Account
+        savings_account.label: Savings Account

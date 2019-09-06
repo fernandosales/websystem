@@ -10,3 +10,11 @@ services:
         arguments:
             - InstitutionBundle\Entity\Institution
             - "@doctrine.orm.entity_manager"
+
+    institution.account_manager.api:
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        public: true
+        arguments:
+            - InstitutionBundle\Entity\Account
+            - "@doctrine.orm.entity_manager"

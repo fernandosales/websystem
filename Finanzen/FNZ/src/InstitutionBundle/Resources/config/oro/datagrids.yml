@@ -84,3 +84,129 @@ datagrids:
                 link:          delete_link
                 icon:          trash
                 acl_resource:  institution.institution_delete
+
+    accounts-grid:
+        source:
+            acl_resource: institution.account_view
+            type: orm
+            query:
+                select:
+                    - a
+                    # - a.number
+                    # - a.currency
+                    # - a.openingBalance
+                    # - a.minimumBalanceToNotify
+                    # - a.openingDate
+                    # # - a.currency
+                    # # - a.currency
+                from:
+                    - { table: InstitutionBundle:Account, alias: a }
+        columns:
+            name:
+                label: account.name.label
+            number:
+                label: account.number.label
+            currency:
+                label: account.currency.label
+            openingBalance:
+                label: account.opening_balance.label
+            minimumBalanceToNotify:
+                label: account.minimum_balance_to_notify.label
+            openingDate:
+                label: account.opening_date.label
+                frontend_type: date
+            favorite:
+                label: account.favorite.label
+                frontend_type: boolean
+            accountingType:
+                label: account.accounting_type.label
+            type:
+                label: account.type.label
+        properties:
+            id: ~
+            view_link:
+              type: url
+              route: institution.account_view
+              params:
+                - id
+            update_link:
+                type: url
+                route: institution.account_update
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: account_api_delete_account
+                params:
+                    - id
+        # sorters:
+        #     columns:
+        #         name:
+        #             data_name: a.name
+        #         number:
+        #             data_name: a.number
+        #         currency:
+        #             data_name: a.currency
+        #         openingBalance:
+        #             data_name: a.openingBalance
+        #         minimumBalanceToNotify:
+        #             data_name: a.minimumBalanceToNotify
+        #         openingDate:
+        #             data_name: a.openingDate
+        #         favorite:
+        #             data_name: a.favorite
+        #         accountingType:
+        #             data_name: a.accountingType
+        #         type:
+        #             data_name: a.type
+        #     default:
+        #         name: ASC
+        # filters:
+        #     columns:
+        #         name:
+        #             type: string
+        #             data_name: a.name
+        #         number:
+        #             type: string
+        #             data_name: a.number
+        #         currency:
+        #             type: string
+        #             data_name: a.currency
+        #         openingBalance:
+        #             type: number
+        #             data_name: a.openingBalance
+        #         minimumBalanceToNotify:
+        #             type: number
+        #             data_name: a.minimumBalanceToNotify
+        #         openingDate:
+        #             type: date
+        #             data_name: a.openingDate
+        #         favorite:
+        #             type: boolean
+        #             data_name: a.favorite
+        #         accountingType:
+        #             type: string
+        #             data_name: a.accountingType
+        #         type:
+        #             type: string
+        #             data_name: a.type
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  institution.account_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  institution.account_update
+            # delete:
+            #     type:          delete
+            #     label:         Delete
+            #     link:          delete_link
+            #     icon:          trash
+            #     acl_resource:  institution.account_delete

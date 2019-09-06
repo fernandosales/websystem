@@ -1,0 +1,67 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'OroAddressBundle::macros.html.twig' as address %}
+
+{% oro_title_set({params : {"%entityName%": entity.name }}) %}
+
+{% block navButtons %}
+    {% if is_granted('EDIT', entity) %}
+        {{ UI.editButton({
+            'path' : path('institution.account_update', { id: entity.id }),
+            'entity_label': 'account.entity_label'|trans
+        }) }}
+    {% endif %}
+
+    {% if is_granted('DELETE', entity) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('account_api_delete_account', {'id': entity.id}),
+            'dataRedirect': path('institution.account_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-account',
+            'dataId': entity.id,
+            'entity_label': 'account.entity_label'|trans
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity':      entity,
+        'indexPath':   path('institution.account_index'),
+        'indexLabel': 'account.entity_plural_label'|trans,
+        'entityTitle': entity.name
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+                    {{ UI.renderProperty('account.name.label'|trans,                      entity.name) }}
+                    {{ UI.renderProperty('account.number.label'|trans,                    entity.number) }}
+                    {{ UI.renderProperty('account.currency.label'|trans,                  entity.currency) }}
+                    {{ UI.renderProperty('account.opening_balance.label'|trans,           entity.openingBalance) }}
+                    {{ UI.renderProperty('account.minimum_balance_to_notify.label'|trans, entity.minimumBalanceToNotify) }}
+                    {{ UI.renderProperty('account.favorite.label'|trans,                  entity.favorite) }}
+                    {{ UI.renderProperty('account.accounting_type.label'|trans,           entity.accountingType) }}
+                    {{ UI.renderProperty('account.type.label'|trans,                      entity.type) }}
+                </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+        {
+            'title': 'account.block.general'|trans,
+            'class': 'active',
+            'subblocks': [
+                { 'data' : [data] }
+            ]
+        }
+    ] %}
+
+    {% set id = 'accountView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

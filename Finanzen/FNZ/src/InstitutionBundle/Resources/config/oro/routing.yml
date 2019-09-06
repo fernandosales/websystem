@@ -1,10 +1,25 @@
-institution_bundle:
-    resource: "@InstitutionBundle/Controller"
+institution_bundle_institution:
+    resource: "@InstitutionBundle/Controller/InstitutionController.php"
     type: annotation
     prefix: /institution
 
+institution_bundle_account:
+    resource: "@InstitutionBundle/Controller/AccountController.php"
+    type: annotation
+    prefix: /account
+
 institution_api_institution:
     resource: "@InstitutionBundle/Controller/Api/Rest/InstitutionController.php"
+    type: rest
+    prefix: api/rest/{version}/
+    requirements:
+        version: latest|v1
+        _format: json
+    defaults:
+        version: latest
+
+account_api_account:
+    resource: "@InstitutionBundle/Controller/Api/Rest/AccountController.php"
     type: rest
     prefix: api/rest/{version}/
     requirements:

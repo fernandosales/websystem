@@ -1,0 +1,14 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set pageTitle = 'account.entity_label'|trans %}
+
+{% block navButtons %}
+    {% if is_granted('institution.account_create') %}
+        <div class="btn-group">
+            {{ UI.addButton({
+            'path': path('institution.account_create'),
+            'entity_label': 'account.entity_label'|trans
+            }) }}
+        </div>
+    {% endif %}
+{% endblock %}

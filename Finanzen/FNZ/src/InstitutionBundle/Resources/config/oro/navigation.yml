@@ -15,6 +15,13 @@ navigation:
                 extras:
                     routes: ['/^institution/']
                     description: 'institution.entity_plural_label'
+            account_list:
+                label: 'account.entity_plural_label'
+                route: 'institution.account_index'
+                position: 200
+                extras:
+                    routes: ['/^account/']
+                    description: 'account.entity_plural_label'
 
         tree:
             application_menu:
@@ -22,6 +29,7 @@ navigation:
                     institution_tab:
                         children:
                             institution_list: ~
+                            account_list: ~
 
 
     titles:
@@ -29,3 +37,8 @@ navigation:
         institution.institution_view:  '%entityName% - oro.ui.view'
         institution.institution_update: '%entityName% - oro.ui.edit'
         institution.institution_create: 'oro.ui.create_entity'
+
+        institution.account_index: ~
+        institution.account_view:  '%entityName% - oro.ui.view'
+        institution.account_update: '%entityName% - oro.ui.edit'
+        institution.account_create: 'oro.ui.create_entity'
