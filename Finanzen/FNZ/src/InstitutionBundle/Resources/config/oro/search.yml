@@ -1,0 +1,14 @@
+search:
+    InstitutionBundle\Entity\Institution:
+        alias:                          institutions
+        title_fields:                   [name]
+        search_template:                OroSearchBundle:Search:searchResultItem.html.twig
+        route:
+            name:                       institution_view
+            parameters:
+                id:                     id
+        fields:
+            -
+                name:                   name
+                target_type:            text
+                target_fields:          [name]

@@ -5,6 +5,9 @@ namespace InstitutionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use InstitutionBundle\Model\ExtendAccount;
 use JMS\Serializer\Annotation as JMS;
+use Oro\Bundle\CurrencyBundle\Entity\CurrencyAwareInterface;
+use Oro\Bundle\CurrencyBundle\Entity\MultiCurrency;
+use Oro\Bundle\CurrencyBundle\Entity\MultiCurrencyHolderInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
@@ -17,8 +20,8 @@ use Oro\Bundle\UserBundle\Entity\User;
  * @ORM\Entity(repositoryClass="InstitutionBundle\Entity\Repository\AccountRepository")
  * @ORM\Table(name="fnz_account")
  * @Config(
- *      routeName="institution.account_index",
- *      routeView="institution.account_view",
+ *      routeName="fnz.account.account_index",
+ *      routeView="fnz.account.account_view",
  *      defaultValues={
  *          "entity"={
  *              "icon"="fa-user"
@@ -49,7 +52,8 @@ use Oro\Bundle\UserBundle\Entity\User;
  * )
  * @JMS\ExclusionPolicy("ALL")
  */
-class Account extends ExtendAccount implements DatesAwareInterface
+class Account extends ExtendAccount implements
+    DatesAwareInterface
 {
 
     use DatesAwareTrait;
@@ -96,7 +100,7 @@ class Account extends ExtendAccount implements DatesAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="currency", type="currency", length=3, nullable=true)
+     * @ORM\Column(name="currency", type="string", length=3, nullable=true)
      * @JMS\Type("string")
      * @JMS\Expose
      * @ConfigField(
@@ -112,13 +116,13 @@ class Account extends ExtendAccount implements DatesAwareInterface
     /**
      * @var double
      *
-     * @ORM\Column(name="opening_balance", type="money", nullable=true)
+     * @ORM\Column(name="opening_balance", type="money_value", nullable=true)
      * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
+     *  defaultValues={
+     *      "dataaudit"={
+     *          "auditable"=true
      *      }
+     *  }
      * )
      */
     protected $openingBalance;
@@ -126,7 +130,7 @@ class Account extends ExtendAccount implements DatesAwareInterface
     /**
      * @var double
      *
-     * @ORM\Column(name="minimum_balance_to_notify", type="money", nullable=true)
+     * @ORM\Column(name="minimum_balance_to_notify", type="money_value", nullable=true)
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
@@ -275,7 +279,6 @@ class Account extends ExtendAccount implements DatesAwareInterface
        */
       protected $updatedAtSet;
 
-
     /**
      * Get the value of Id
      *
@@ -373,8 +376,6 @@ class Account extends ExtendAccount implements DatesAwareInterface
     }
 
     /**
-     * Get the value of Opening Balance
-     *
      * @return double
      */
     public function getOpeningBalance()
@@ -383,11 +384,8 @@ class Account extends ExtendAccount implements DatesAwareInterface
     }
 
     /**
-     * Set the value of Opening Balance
-     *
-     * @param double openingBalance
-     *
-     * @return self
+     * @param float $openingBalance
+     * @return Account
      */
     public function setOpeningBalance($openingBalance)
     {

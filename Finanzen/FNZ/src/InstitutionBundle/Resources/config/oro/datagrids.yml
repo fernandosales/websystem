@@ -1,15 +1,12 @@
 datagrids:
     institutions-grid:
+        extended_entity_name: '%fnz.institution.entity.institution.class%'
         source:
-            acl_resource: institution.institution_view
+            acl_resource: fnz.institution.institution_view
             type: orm
             query:
                 select:
-                    - i.id
-                    - i.name
-                    - i.branchNumber
-                    - i.iban
-                    - i.bic
+                    - i
                 from:
                     - { table: InstitutionBundle:Institution, alias: i }
         columns:
@@ -25,12 +22,12 @@ datagrids:
             id: ~
             view_link:
               type: url
-              route: institution.institution_view
+              route: fnz.institution.institution_view
               params:
                 - id
             update_link:
                 type: url
-                route: institution.institution_update
+                route: fnz.institution.institution_update
                 params:
                     - id
             delete_link:
@@ -70,35 +67,32 @@ datagrids:
                 label:         View
                 link:          view_link
                 icon:          eye-open
-                acl_resource:  institution.institution_view
+                acl_resource:  fnz.institution.institution_view
                 rowAction:     true
             update:
                 type:          navigate
                 label:         Update
                 link:          update_link
                 icon:          edit
-                acl_resource:  institution.institution_update
+                acl_resource:  fnz.institution.institution_update
             delete:
                 type:          delete
                 label:         Delete
                 link:          delete_link
                 icon:          trash
-                acl_resource:  institution.institution_delete
+                acl_resource:  fnz.institution.institution_delete
+
+    institution-form-select-grid:
+        extends: institutions-grid
 
     accounts-grid:
+        extended_entity_name: '%fnz.institution.entity.account.class%'
         source:
-            acl_resource: institution.account_view
+            acl_resource: fnz.account.account_view
             type: orm
             query:
                 select:
                     - a
-                    # - a.number
-                    # - a.currency
-                    # - a.openingBalance
-                    # - a.minimumBalanceToNotify
-                    # - a.openingDate
-                    # # - a.currency
-                    # # - a.currency
                 from:
                     - { table: InstitutionBundle:Account, alias: a }
         columns:
@@ -112,6 +106,7 @@ datagrids:
                 label: account.opening_balance.label
             minimumBalanceToNotify:
                 label: account.minimum_balance_to_notify.label
+                type: money_value
             openingDate:
                 label: account.opening_date.label
                 frontend_type: date
@@ -126,12 +121,12 @@ datagrids:
             id: ~
             view_link:
               type: url
-              route: institution.account_view
+              route: fnz.account.account_view
               params:
                 - id
             update_link:
                 type: url
-                route: institution.account_update
+                route: fnz.account.account_update
                 params:
                     - id
             delete_link:
@@ -139,74 +134,95 @@ datagrids:
                 route: account_api_delete_account
                 params:
                     - id
-        # sorters:
-        #     columns:
-        #         name:
-        #             data_name: a.name
-        #         number:
-        #             data_name: a.number
-        #         currency:
-        #             data_name: a.currency
-        #         openingBalance:
-        #             data_name: a.openingBalance
-        #         minimumBalanceToNotify:
-        #             data_name: a.minimumBalanceToNotify
-        #         openingDate:
-        #             data_name: a.openingDate
-        #         favorite:
-        #             data_name: a.favorite
-        #         accountingType:
-        #             data_name: a.accountingType
-        #         type:
-        #             data_name: a.type
-        #     default:
-        #         name: ASC
-        # filters:
-        #     columns:
-        #         name:
-        #             type: string
-        #             data_name: a.name
-        #         number:
-        #             type: string
-        #             data_name: a.number
-        #         currency:
-        #             type: string
-        #             data_name: a.currency
-        #         openingBalance:
-        #             type: number
-        #             data_name: a.openingBalance
-        #         minimumBalanceToNotify:
-        #             type: number
-        #             data_name: a.minimumBalanceToNotify
-        #         openingDate:
-        #             type: date
-        #             data_name: a.openingDate
-        #         favorite:
-        #             type: boolean
-        #             data_name: a.favorite
-        #         accountingType:
-        #             type: string
-        #             data_name: a.accountingType
-        #         type:
-        #             type: string
-        #             data_name: a.type
+        sorters:
+            columns:
+                name:
+                    data_name: a.name
+                number:
+                    data_name: a.number
+                currency:
+                    data_name: a.currency
+                    type: currency
+                openingBalance:
+                    data_name: a.openingBalance
+                minimumBalanceToNotify:
+                    data_name: a.minimumBalanceToNotify
+                openingDate:
+                    data_name: a.openingDate
+                favorite:
+                    data_name: a.favorite
+                accountingType:
+                    data_name: a.accountingType
+                type:
+                    data_name: a.type
+            default:
+                name: ASC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: a.name
+                number:
+                    type: string
+                    data_name: a.number
+                currency:
+                    type: string
+                    data_name: currency
+                openingBalance:
+                    type: currency
+                    data_name: openingBalance
+                minimumBalanceToNotify:
+                    type: currency
+                    data_name: a.minimumBalanceToNotify
+                openingDate:
+                    type: date
+                    data_name: a.openingDate
+                favorite:
+                    type: boolean
+                    data_name: a.favorite
+                accountingType:
+                    type: string
+                    data_name: a.accountingType
+                type:
+                    type: string
+                    data_name: a.type
         actions:
             view:
                 type:          navigate
                 label:         View
                 link:          view_link
                 icon:          eye-open
-                acl_resource:  institution.account_view
+                acl_resource:  fnz.account.account_view
                 rowAction:     true
             update:
                 type:          navigate
                 label:         Update
                 link:          update_link
                 icon:          edit
-                acl_resource:  institution.account_update
-            # delete:
-            #     type:          delete
-            #     label:         Delete
-            #     link:          delete_link
-            #     icon:          trash
-            #     acl_resource:  institution.account_delete
+                acl_resource:  fnz.account.account_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  fnz.account.account_delete
+
+    institution-view-accounts-grid:
+        extends: accounts-grid
+        source:
+            query:
+                join:
+                    left:
+                        institution:
+                            join: a.institution
+                            alias: i
+                where:
+                    and:
+                        - i.id = :institution_id
+            bind_parameters:
+                -
+                    name:  institution_id
+                    default: null
+
+        action_configuration:
+            delete: false

@@ -7,7 +7,7 @@
 {% block navButtons %}
     {% if is_granted('EDIT', entity) %}
         {{ UI.editButton({
-            'path' : path('institution.account_update', { id: entity.id }),
+            'path' : path('fnz.account.account_update', { id: entity.id }),
             'entity_label': 'account.entity_label'|trans
         }) }}
     {% endif %}
@@ -15,7 +15,7 @@
     {% if is_granted('DELETE', entity) %}
         {{ UI.deleteButton({
             'dataUrl': path('account_api_delete_account', {'id': entity.id}),
-            'dataRedirect': path('institution.account_index'),
+            'dataRedirect': path('fnz.account.account_index'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-account',
             'dataId': entity.id,
@@ -27,7 +27,7 @@
 {% block pageHeader %}
     {% set breadcrumbs = {
         'entity':      entity,
-        'indexPath':   path('institution.account_index'),
+        'indexPath':   path('fnz.account.account_index'),
         'indexLabel': 'account.entity_plural_label'|trans,
         'entityTitle': entity.name
     } %}
@@ -42,11 +42,14 @@
                     {{ UI.renderProperty('account.name.label'|trans,                      entity.name) }}
                     {{ UI.renderProperty('account.number.label'|trans,                    entity.number) }}
                     {{ UI.renderProperty('account.currency.label'|trans,                  entity.currency) }}
-                    {{ UI.renderProperty('account.opening_balance.label'|trans,           entity.openingBalance) }}
-                    {{ UI.renderProperty('account.minimum_balance_to_notify.label'|trans, entity.minimumBalanceToNotify) }}
+                    {{ UI.renderProperty('account.opening_balance.label'|trans,           entity.openingBalance|localizedcurrency(entity.currency)) }}
+                    {{ UI.renderProperty('account.minimum_balance_to_notify.label'|trans, entity.minimumBalanceToNotify|localizedcurrency(entity.currency)) }}
                     {{ UI.renderProperty('account.favorite.label'|trans,                  entity.favorite) }}
                     {{ UI.renderProperty('account.accounting_type.label'|trans,           entity.accountingType) }}
                     {{ UI.renderProperty('account.type.label'|trans,                      entity.type) }}
+                    {% if entity.institution %}
+                        {{ UI.renderProperty('account.institution.label'|trans,           entity.institution.name) }}
+                    {% endif %}
                 </div>
             </div>
         </div>

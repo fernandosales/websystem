@@ -3,10 +3,10 @@
 {% set pageTitle = 'institution.entity_label'|trans %}
 
 {% block navButtons %}
-    {% if is_granted('institution.institution_create') %}
+    {% if is_granted('fnz.institution.institution_create') %}
         <div class="btn-group">
             {{ UI.addButton({
-            'path': path('institution.institution_create'),
+            'path': path('fnz.institution.institution_create'),
             'entity_label': 'institution.entity_label'|trans
             }) }}
         </div>

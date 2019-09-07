@@ -10,14 +10,14 @@ navigation:
                     icon: fa-handshake-o
             institution_list:
                 label: 'institution.entity_plural_label'
-                route: 'institution.institution_index'
+                route: 'fnz.institution.institution_index'
                 position: 200
                 extras:
                     routes: ['/^institution/']
                     description: 'institution.entity_plural_label'
             account_list:
                 label: 'account.entity_plural_label'
-                route: 'institution.account_index'
+                route: 'fnz.account.account_index'
                 position: 200
                 extras:
                     routes: ['/^account/']
@@ -33,12 +33,12 @@ navigation:
 
 
     titles:
-        institution.institution_index: ~
-        institution.institution_view:  '%entityName% - oro.ui.view'
-        institution.institution_update: '%entityName% - oro.ui.edit'
-        institution.institution_create: 'oro.ui.create_entity'
+        fnz.institution.institution_index: ~
+        fnz.institution.institution_view:  '%entityName% - oro.ui.view'
+        fnz.institution.institution_update: '%entityName% - oro.ui.edit'
+        fnz.institution.institution_create: 'oro.ui.create_entity'
 
-        institution.account_index: ~
-        institution.account_view:  '%entityName% - oro.ui.view'
-        institution.account_update: '%entityName% - oro.ui.edit'
-        institution.account_create: 'oro.ui.create_entity'
+        fnz.account.account_index: ~
+        fnz.account.account_view:  '%entityName% - oro.ui.view'
+        fnz.account.account_update: '%entityName% - oro.ui.edit'
+        fnz.account.account_create: 'oro.ui.create_entity'

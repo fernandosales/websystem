@@ -1,13 +1,14 @@
 {% extends 'OroUIBundle:actions:view.html.twig' %}
 {% import 'OroUIBundle::macros.html.twig' as UI %}
 {% import 'OroAddressBundle::macros.html.twig' as address %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
 
 {% oro_title_set({params : {"%entityName%": entity.name }}) %}
 
 {% block navButtons %}
     {% if is_granted('EDIT', entity) %}
         {{ UI.editButton({
-            'path' : path('institution.institution_update', { id: entity.id }),
+            'path' : path('fnz.institution.institution_update', { id: entity.id }),
             'entity_label': 'institution.entity_label'|trans
         }) }}
     {% endif %}
@@ -15,7 +16,7 @@
     {% if is_granted('DELETE', entity) %}
         {{ UI.deleteButton({
             'dataUrl': path('institution_api_delete_institution', {'id': entity.id}),
-            'dataRedirect': path('institution.institution_index'),
+            'dataRedirect': path('fnz.institution.institution_index'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-institution',
             'dataId': entity.id,
@@ -27,7 +28,7 @@
 {% block pageHeader %}
     {% set breadcrumbs = {
         'entity':      entity,
-        'indexPath':   path('institution.institution_index'),
+        'indexPath':   path('fnz.institution.institution_index'),
         'indexLabel': 'institution.entity_plural_label'|trans,
         'entityTitle': entity.name
     } %}
@@ -58,6 +59,19 @@
             ]
         }
     ] %}
+
+    {% set gridAccount = 'institution-view-accounts-grid' %}
+    {% set dataBlocks = dataBlocks|merge([{
+        'title' : 'account.entity_plural_label'|trans,
+        'priority': 100,
+        'subblocks': [{
+            'title' : null,
+            'useSpan': false,
+            'data' : [
+                dataGrid.renderGrid(gridAccount, {institution_id: entity.id}, { cssClass: 'inner-grid', 'enableFullScreenLayout': true, 'enableViews': false })
+            ]
+        }]
+    }] ) %}
 
     {% set id = 'institutionView' %}
     {% set data = { 'dataBlocks': dataBlocks } %}

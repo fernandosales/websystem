@@ -1,9 +1,10 @@
 parameters:
-    institution.entity.institution.class: InstitutionBundle\Entity\Institution
+    fnz.institution.entity.institution.class: InstitutionBundle\Entity\Institution
+    fnz.institution.entity.account.class:     InstitutionBundle\Entity\Account
 
 services:
 
-    institution.institution_manager.api:
+    fnz.institution.institution_manager.api:
         class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
         parent: oro_soap.manager.entity_manager.abstract
         public: true
@@ -11,10 +12,18 @@ services:
             - InstitutionBundle\Entity\Institution
             - "@doctrine.orm.entity_manager"
 
-    institution.account_manager.api:
+    fnz.account.account_manager.api:
         class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
         parent: oro_soap.manager.entity_manager.abstract
         public: true
         arguments:
             - InstitutionBundle\Entity\Account
             - "@doctrine.orm.entity_manager"
+
+    fnz.institution.institution_search_handler:
+        parent: oro_form.autocomplete.search_handler
+        arguments:
+            - InstitutionBundle\Entity\Institution
+            - ["name"]
+        tags:
+            - { name: oro_form.autocomplete.search_handler, alias: institutions, acl_resource: fnz.institution.institution_view }

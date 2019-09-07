@@ -3,11 +3,14 @@
 namespace InstitutionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use InstitutionBundle\Entity\Address;
 use InstitutionBundle\Model\ExtendInstitution;
 use JMS\Serializer\Annotation as JMS;
-use Oro\Bundle\AddressBundle\Entity\Address;
+use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
+use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\UserBundle\Entity\User;
 
 /**
  * This entity represents a institution of a system
@@ -15,8 +18,8 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
  * @ORM\Entity(repositoryClass="InstitutionBundle\Entity\Repository\InstitutionRepository")
  * @ORM\Table(name="fnz_institution")
  * @Config(
- *      routeName="institution.institution_index",
- *      routeView="institution.institution_view",
+ *      routeName="fnz.institution.institution_index",
+ *      routeView="fnz.institution.institution_view",
  *      defaultValues={
  *          "entity"={
  *              "icon"="fa-user"
@@ -46,8 +49,11 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
  * )
  * @JMS\ExclusionPolicy("ALL")
  */
-class Institution extends ExtendInstitution
+class Institution extends ExtendInstitution implements DatesAwareInterface
 {
+
+    use DatesAwareTrait;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -120,7 +126,7 @@ class Institution extends ExtendInstitution
     /**
      * @var Address
      *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\AddressBundle\Entity\Address", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="InstitutionBundle\Entity\Address", cascade={"persist"})
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      * @ConfigField(
      *      defaultValues={
@@ -131,6 +137,70 @@ class Institution extends ExtendInstitution
      * )
      */
     protected $address;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $createdBy;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="updated_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $updatedBy;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @JMS\Type("date")
+     * @ConfigField(
+     *      defaultValues={
+     *          "entity"={
+     *              "label"="oro.ui.updated_at"
+     *          }
+     *      }
+     * )
+     */
+    protected $updatedAt;
+
+    /**
+     * @var bool
+     */
+    protected $updatedAtSet;
+
+    /**
+     * @var \DateTime
+     *
+     * @Doctrine\ORM\Mapping\Column(name="created_at", type="datetime", nullable=true)
+     * @ConfigField(
+     *      defaultValues={
+     *          "entity"={
+     *              "label"="oro.ui.updated_at"
+     *          }
+     *      }
+     * )
+     */
+    protected $createdAt;
 
     /**
      * Get the value of Id

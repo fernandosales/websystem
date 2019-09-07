@@ -3,10 +3,10 @@
 {% set pageTitle = 'account.entity_label'|trans %}
 
 {% block navButtons %}
-    {% if is_granted('institution.account_create') %}
+    {% if is_granted('fnz.account.account_create') %}
         <div class="btn-group">
             {{ UI.addButton({
-            'path': path('institution.account_create'),
+            'path': path('fnz.account.account_create'),
             'entity_label': 'account.entity_label'|trans
             }) }}
         </div>

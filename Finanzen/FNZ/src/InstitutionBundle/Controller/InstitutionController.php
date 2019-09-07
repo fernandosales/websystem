@@ -15,10 +15,10 @@ use InstitutionBundle\Form\Type\InstitutionType;
 class InstitutionController extends Controller
 {
   /**
-    * @Route("/", name="institution.institution_index")
+    * @Route("/", name="fnz.institution.institution_index")
     * @Template
     * @Acl(
-    *     id="institution.institution_view",
+    *     id="fnz.institution.institution_view",
     *     type="entity",
     *     class="InstitutionBundle:Institution",
     *     permission="VIEW"
@@ -30,9 +30,9 @@ class InstitutionController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="institution.institution_view", requirements={"id"="\d+"})
+     * @Route("/{id}", name="fnz.institution.institution_view", requirements={"id"="\d+"})
      * @Template
-     * @AclAncestor("institution.institution_view")
+     * @AclAncestor("fnz.institution.institution_view")
      */
     public function viewAction(Institution $institution)
     {
@@ -40,10 +40,10 @@ class InstitutionController extends Controller
     }
 
     /**
-     * @Route("/create", name="institution.institution_create")
+     * @Route("/create", name="fnz.institution.institution_create")
      * @Template("InstitutionBundle:Institution:update.html.twig")
      * @Acl(
-     *     id="institution.institution_create",
+     *     id="fnz.institution.institution_create",
      *     type="entity",
      *     class="InstitutionBundle:Institution",
      *     permission="CREATE"
@@ -55,10 +55,10 @@ class InstitutionController extends Controller
     }
 
     /**
-     * @Route("/update/{id}", name="institution.institution_update", requirements={"id":"\d+"}, defaults={"id":0})
+     * @Route("/update/{id}", name="fnz.institution.institution_update", requirements={"id":"\d+"}, defaults={"id":0})
      * @Template()
      * @Acl(
-     *     id="institution.institution_update",
+     *     id="fnz.institution.institution_update",
      *     type="entity",
      *     class="InstitutionBundle:institution",
      *     permission="EDIT"
@@ -81,10 +81,10 @@ class InstitutionController extends Controller
 
             return $this->get('oro_ui.router')->redirectAfterSave(
                 array(
-                    'route' => 'institution.institution_update',
+                    'route' => 'fnz.institution.institution_update',
                     'parameters' => array('id' => $institution->getId()),
                 ),
-                array('route' => 'institution.institution_index'),
+                array('route' => 'fnz.institution.institution_index'),
                 $institution
             );
         }

@@ -1,25 +1,32 @@
 parameters:
-    institution.form.type.institution_address.class: InstitutionBundle\Form\Type\InstitutionAddressType
-    institution.form.type.institution.class:         InstitutionBundle\Form\Type\InstitutionType
-    institution.form.type.account.class:             InstitutionBundle\Form\Type\AccountType
+    fnz.institution.form.type.institution_address.class: InstitutionBundle\Form\Type\InstitutionAddressType
+    fnz.institution.form.type.fnz.institution.class:         InstitutionBundle\Form\Type\InstitutionType
+    fnz.institution.form.type.account.class:             InstitutionBundle\Form\Type\AccountType
 
 
 services:
-    institution.form.type.institution:
-        class: '%institution.form.type.institution.class%'
+    fnz.institution.form.type.institution:
+        class: '%fnz.institution.form.type.fnz.institution.class%'
         tags:
             - { name: form.type, alias: institution_institution_type }
 
-    # Custon Address form type to Institution
-    institution.form.type.institution_address:
-        class: '%institution.form.type.institution_address.class%'
+    # Custom Address form type to Institution
+    fnz.institution.form.type.institution_address:
+        class: '%fnz.institution.form.type.institution_address.class%'
         arguments:
             - '@oro_address.form.listener.address'
             - '@oro_address.form.listener.address_identifier'
         tags:
              - { name: form.type, alias: institution_institution_address_type }
 
-    institution.form.type.account:
-        class: '%institution.form.type.account.class%'
+    fnz.institution.form.type.account:
+        class: '%fnz.institution.form.type.account.class%'
         tags:
             - { name: form.type, alias: institution_account_type }
+
+    fnz.institution.form.type.institution_select:
+            class: 'InstitutionBundle\Form\Type\InstitutionSelectType'
+            arguments:
+                - "@translator"
+            tags:
+                - { name: form.type, alias: institution_institution_select_type }

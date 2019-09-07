@@ -18,7 +18,7 @@ class InstitutionController extends RestController
      * Delete institution
      *
      * @Acl(
-     *      id="institution.institution_delete",
+     *      id="fnz.institution.institution_delete",
      *      type="entity",
      *      class="InstitutionBundle:Institution",
      *      permission="DELETE"
@@ -39,6 +39,6 @@ class InstitutionController extends RestController
 
     public function getManager()
     {
-        return $this->get('institution.institution_manager.api');
+        return $this->get('fnz.institution.institution_manager.api');
     }
 }

@@ -18,7 +18,7 @@ class AccountController extends RestController
      * Delete institution
      *
      * @Acl(
-     *      id="institution.account_delete",
+     *      id="fnz.account.account_delete",
      *      type="entity",
      *      class="InstitutionBundle:Account",
      *      permission="DELETE"
@@ -39,6 +39,6 @@ class AccountController extends RestController
 
     public function getManager()
     {
-        return $this->get('institution.account_manager.api');
+        return $this->get('fnz.account.account_manager.api');
     }
 }

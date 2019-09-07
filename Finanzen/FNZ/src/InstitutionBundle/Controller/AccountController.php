@@ -16,10 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 class AccountController extends Controller
 {
   /**
-    * @Route("/", name="institution.account_index")
+    * @Route("/", name="fnz.account.account_index")
     * @Template
     * @Acl(
-    *     id="institution.account_view",
+    *     id="fnz.account.account_view",
     *     type="entity",
     *     class="InstitutionBundle:Account",
     *     permission="VIEW"
@@ -31,9 +31,9 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="institution.account_view", requirements={"id"="\d+"})
+     * @Route("/{id}", name="fnz.account.account_view", requirements={"id"="\d+"})
      * @Template
-     * @AclAncestor("institution.account_view")
+     * @AclAncestor("fnz.account.account_view")
      */
     public function viewAction(Account $account)
     {
@@ -41,10 +41,10 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/create", name="institution.account_create")
+     * @Route("/create", name="fnz.account.account_create")
      * @Template("InstitutionBundle:Account:update.html.twig")
      * @Acl(
-     *     id="institution.account_create",
+     *     id="fnz.account.account_create",
      *     type="entity",
      *     class="InstitutionBundle:Account",
      *     permission="CREATE"
@@ -56,10 +56,10 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/update/{id}", name="institution.account_update", requirements={"id":"\d+"}, defaults={"id":0})
+     * @Route("/update/{id}", name="fnz.account.account_update", requirements={"id":"\d+"}, defaults={"id":0})
      * @Template()
      * @Acl(
-     *     id="institution.account_update",
+     *     id="fnz.account.account_update",
      *     type="entity",
      *     class="InstitutionBundle:Account",
      *     permission="EDIT"
@@ -82,10 +82,10 @@ class AccountController extends Controller
 
             return $this->get('oro_ui.router')->redirectAfterSave(
                 array(
-                    'route' => 'institution.account_update',
+                    'route' => 'fnz.account.account_update',
                     'parameters' => array('id' => $account->getId()),
                 ),
-                array('route' => 'institution.account_index'),
+                array('route' => 'fnz.account.account_index'),
                 $account
             );
         }

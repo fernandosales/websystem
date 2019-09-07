@@ -49,3 +49,4 @@ account:
         credit_card.label: Credit Card
         current_account.label: Current Account
         savings_account.label: Savings Account
+  institution.label: Institution
