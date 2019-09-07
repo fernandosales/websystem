@@ -5,9 +5,6 @@ namespace InstitutionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use InstitutionBundle\Model\ExtendAccount;
 use JMS\Serializer\Annotation as JMS;
-use Oro\Bundle\CurrencyBundle\Entity\CurrencyAwareInterface;
-use Oro\Bundle\CurrencyBundle\Entity\MultiCurrency;
-use Oro\Bundle\CurrencyBundle\Entity\MultiCurrencyHolderInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
@@ -86,7 +83,7 @@ class Account extends ExtendAccount implements
     /**
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=255)
+     * @ORM\Column(name="number", type="string", length=11)
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
@@ -116,7 +113,7 @@ class Account extends ExtendAccount implements
     /**
      * @var double
      *
-     * @ORM\Column(name="opening_balance", type="money_value", nullable=true)
+     * @ORM\Column(name="opening_balance", type="decimal", nullable=true, precision = 19, scale = 4)
      * @ConfigField(
      *  defaultValues={
      *      "dataaudit"={
@@ -130,7 +127,7 @@ class Account extends ExtendAccount implements
     /**
      * @var double
      *
-     * @ORM\Column(name="minimum_balance_to_notify", type="money_value", nullable=true)
+     * @ORM\Column(name="minimum_balance_to_notify", type="decimal", nullable=true, precision = 19, scale = 4)
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
@@ -172,7 +169,7 @@ class Account extends ExtendAccount implements
     /**
      * @var string
      *
-     * @ORM\Column(name="accounting_type", type="string", length=10, nullable=true)
+     * @ORM\Column(name="accounting_type", type="integer", nullable=true)
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
@@ -187,7 +184,7 @@ class Account extends ExtendAccount implements
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=10, nullable=true)
+     * @ORM\Column(name="type", type="integer", nullable=true)
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={

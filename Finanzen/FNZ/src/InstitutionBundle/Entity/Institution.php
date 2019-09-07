@@ -66,7 +66,7 @@ class Institution extends ExtendInstitution implements DatesAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=100, unique=true)
      * @JMS\Type("string")
      * @JMS\Expose
      * @ConfigField(
@@ -82,7 +82,7 @@ class Institution extends ExtendInstitution implements DatesAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="branch_number", type="string", length=255)
+     * @ORM\Column(name="branch_number", type="string", length=11)
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
@@ -96,7 +96,7 @@ class Institution extends ExtendInstitution implements DatesAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=11, unique=true, unique=true)
+     * @ORM\Column(name="bic", type="string", length=11, unique=true)
      * @JMS\Type("string")
      * @JMS\Expose
      * @ConfigField(
@@ -112,7 +112,7 @@ class Institution extends ExtendInstitution implements DatesAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="iban", type="string", length=255, unique=true)
+     * @ORM\Column(name="iban", type="string", length=100, unique=true)
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={

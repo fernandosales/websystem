@@ -2,12 +2,12 @@
 
 namespace InstitutionBundle\Form\Type;
 
-use Oro\Bundle\FormBundle\Form\Type\OroMoneyType;
+use Oro\Bundle\CurrencyBundle\Form\Type\CurrencyType;
 use Oro\Bundle\FormBundle\Form\Type\OroDateType;
+use Oro\Bundle\FormBundle\Form\Type\OroMoneyType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Oro\Bundle\CurrencyBundle\Form\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -97,7 +97,7 @@ class AccountType extends AbstractType
                       'required' => true,
                       'create_enabled' => false,
                       'disabled' => false,
-                      'data_parameters' => []
+                      'data_parameters' => [],
                   ]
             )
         ;

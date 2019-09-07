@@ -1,0 +1,5 @@
+oro_entity:
+    entity_aliases:
+        InstitutionBundle\Entity\Address:
+            alias:        fnzaddress
+            plural_alias: fnzaddresses
