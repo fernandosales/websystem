@@ -228,4 +228,4 @@ datagrids:
             delete: false
 
     account-form-select-grid:
-        extends: institutions-grid
+        extends: accounts-grid

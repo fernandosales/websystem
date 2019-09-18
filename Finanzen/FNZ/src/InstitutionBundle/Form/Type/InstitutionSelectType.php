@@ -44,7 +44,7 @@ class InstitutionSelectType extends AbstractType
                 'autocomplete_alias' => 'institutions',
                 'grid_name' => 'institution-form-select-grid',
                 'configs' => [
-                    'placeholder' => 'oro.form.choose',
+                    'placeholder' => 'institution.form.choose',
                 ],
             ]
         );

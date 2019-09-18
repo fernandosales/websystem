@@ -9,6 +9,9 @@ institution:
   block:
     general: General
 
+  form:
+    choose: Choose a institution
+
   menu:
     institution_tab.label: Institution
 
