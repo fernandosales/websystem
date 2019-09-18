@@ -30,3 +30,10 @@ services:
                 - "@translator"
             tags:
                 - { name: form.type, alias: institution_institution_select_type }
+
+    fnz.institution.form.type.account_select:
+            class: 'InstitutionBundle\Form\Type\AccountSelectType'
+            arguments:
+                - "@translator"
+            tags:
+                - { name: form.type, alias: institution_account_select_type }

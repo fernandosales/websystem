@@ -27,3 +27,11 @@ services:
             - ["name"]
         tags:
             - { name: oro_form.autocomplete.search_handler, alias: institutions, acl_resource: fnz.institution.institution_view }
+
+    fnz.institution.account_search_handler:
+        parent: oro_form.autocomplete.search_handler
+        arguments:
+            - InstitutionBundle\Entity\Account
+            - ["name"]
+        tags:
+            - { name: oro_form.autocomplete.search_handler, alias: accounts, acl_resource: fnz.institution.account_view }

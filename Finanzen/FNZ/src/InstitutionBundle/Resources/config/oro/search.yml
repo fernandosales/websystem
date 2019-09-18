@@ -4,7 +4,21 @@ search:
         title_fields:                   [name]
         search_template:                OroSearchBundle:Search:searchResultItem.html.twig
         route:
-            name:                       institution_view
+            name:                       fnz.institution.institution_view
+            parameters:
+                id:                     id
+        fields:
+            -
+                name:                   name
+                target_type:            text
+                target_fields:          [name]
+
+    InstitutionBundle\Entity\Account:
+        alias:                          accounts
+        title_fields:                   [name]
+        search_template:                OroSearchBundle:Search:searchResultItem.html.twig
+        route:
+            name:                       fnz.account.account_view
             parameters:
                 id:                     id
         fields:

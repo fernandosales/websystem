@@ -24,6 +24,9 @@ account:
   block:
     general: General
 
+  form:
+    choose: Choose a account
+
   menu:
     institution_tab.label: Account
 
@@ -50,3 +53,4 @@ account:
         current_account.label: Current Account
         savings_account.label: Savings Account
   institution.label: Institution
+  parent_account.label: Parent account

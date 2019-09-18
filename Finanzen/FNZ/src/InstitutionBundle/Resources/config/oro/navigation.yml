@@ -34,11 +34,11 @@ navigation:
 
     titles:
         fnz.institution.institution_index: ~
-        fnz.institution.institution_view:  '%entityName% - oro.ui.view'
-        fnz.institution.institution_update: '%entityName% - oro.ui.edit'
+        fnz.institution.institution_view:  '%entityName% | Institution - oro.ui.view'
+        fnz.institution.institution_update: '%entityName% | Institution - oro.ui.edit'
         fnz.institution.institution_create: 'oro.ui.create_entity'
 
         fnz.account.account_index: ~
-        fnz.account.account_view:  '%entityName% - oro.ui.view'
-        fnz.account.account_update: '%entityName% - oro.ui.edit'
+        fnz.account.account_view:  '%entityName% | Account - oro.ui.view'
+        fnz.account.account_update: '%entityName% | Account - oro.ui.edit'
         fnz.account.account_create: 'oro.ui.create_entity'

@@ -100,6 +100,16 @@ class AccountType extends AbstractType
                       'data_parameters' => [],
                   ]
             )
+            ->add('parentAccount',
+                  AccountSelectType::class,
+                  [
+                      'label' => 'account.parent_account.label',
+                      'required' => false,
+                      'create_enabled' => false,
+                      'disabled' => false,
+                      'data_parameters' => [],
+                  ]
+            )
         ;
     }
 

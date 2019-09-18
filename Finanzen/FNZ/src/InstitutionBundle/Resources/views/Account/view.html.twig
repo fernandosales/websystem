@@ -50,6 +50,9 @@
                     {% if entity.institution %}
                         {{ UI.renderProperty('account.institution.label'|trans,           entity.institution.name) }}
                     {% endif %}
+                    {% if entity.parentAccount %}
+                        {{ UI.renderProperty('account.parent_account.label'|trans,        entity.parentAccount.name) }}
+                    {% endif %}
                 </div>
             </div>
         </div>
