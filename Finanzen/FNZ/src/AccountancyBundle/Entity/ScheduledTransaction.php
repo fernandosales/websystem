@@ -2,7 +2,7 @@
 
 namespace AccountancyBundle\Entity;
 
-use AccountancyBundle\Model\ExtendLedgerLog;
+use AccountancyBundle\Model\ExtendScheduledTransaction;
 use Doctrine\ORM\Mapping as ORM;
 use InstitutionBundle\Entity\Account;
 use JMS\Serializer\Annotation as JMS;
@@ -15,22 +15,22 @@ use Oro\Bundle\UserBundle\Entity\User;
 /**
  * This entity represents a log of a system
  *
- * @ORM\Entity(repositoryClass="AccountancyBundle\Entity\Repository\LedgerLogRepository")
- * @ORM\Table(name="fnz_ledger_log")
+ * @ORM\Entity(repositoryClass="AccountancyBundle\Entity\Repository\ScheduledTransactionRepository")
+ * @ORM\Table(name="fnz_scheduled_transaction")
  * @Config(
- *      routeName="fnz.ledger_log.ledger_log_index",
- *      routeView="fnz.ledger_log.ledger_log_view",
+ *      routeName="fnz.scheduled_transaction.scheduled_transaction_index",
+ *      routeView="fnz.scheduled_transaction.scheduled_transaction_view",
  *      defaultValues={
  *          "entity"={
- *              "icon"="fa-book"
+ *              "icon"="fa-calendar"
  *          },
  *          "grouping"={
  *              "groups"={"dictionary"}
  *          },
  *          "dictionary"={
  *              "virtual_fields"={"id"},
- *              "search_fields"={"memo"},
- *              "representation_field"="memo",
+ *              "search_fields"={"name"},
+ *              "representation_field"="name",
  *              "activity_support"="true"
  *          },
  *          "dataaudit"={"auditable"=true},
@@ -40,17 +40,17 @@ use Oro\Bundle\UserBundle\Entity\User;
  *              "field_acl_supported" = "true"
  *          },
  *          "form"={
- *              "form_type"="AccountancyBundle\Form\Type\LedgerLogSelectType",
- *              "grid_name"="ledger-logs-select-grid"
+ *              "form_type"="AccountancyBundle\Form\Type\ScheduledTransactionSelectType",
+ *              "grid_name"="scheduled-transactions-select-grid"
  *          },
  *          "grid"={
- *              "default"="ledger-logs-grid",
+ *              "default"="scheduled-transactions-grid",
  *          }
  *      }
  * )
  * @JMS\ExclusionPolicy("ALL")
  */
-class LedgerLog extends ExtendLedgerLog implements
+class ScheduledTransaction extends ExtendScheduledTransaction implements
     DatesAwareInterface
 {
     use DatesAwareTrait;
@@ -67,7 +67,7 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * @var string
      *
-     * @ORM\Column(name="memo", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      * @JMS\Type("string")
      * @JMS\Expose
      * @ConfigField(
@@ -78,7 +78,40 @@ class LedgerLog extends ExtendLedgerLog implements
      *      }
      * )
      */
-    protected $memo;
+    protected $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="frequency", type="integer", length=3, nullable=true)
+     * @JMS\Type("integer")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $frequency;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="frequency_type", type="integer", length=3, nullable=true)
+     * @JMS\Type("integer")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $frequencyType;
 
     /**
      * @var integer
@@ -99,6 +132,22 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * @var integer
      *
+     * @ORM\Column(name="payment_method", type="integer", length=3, nullable=true)
+     * @JMS\Type("integer")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $paymentMethod;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="operation", type="integer", length=3, nullable=true)
      * @JMS\Type("integer")
      * @JMS\Expose
@@ -111,6 +160,86 @@ class LedgerLog extends ExtendLedgerLog implements
      * )
      */
     protected $operation;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_approximate", type="boolean", nullable=true)
+     * @JMS\Type("boolean")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $approximate;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_process_last_day_of_month", type="boolean", nullable=true)
+     * @JMS\Type("boolean")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $processLastDayOfMonth;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_register_automatic", type="boolean", nullable=true)
+     * @JMS\Type("boolean")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $registerAutomatic;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_finite_scheduling", type="boolean", nullable=true)
+     * @JMS\Type("boolean")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $finiteScheduling;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_transaction_date", type="date", nullable=true)
+     * @JMS\Type("date")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $lastTransactionDate;
 
     /**
      * @var \DateTime
@@ -186,9 +315,9 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="ledgerLogs")
-     * @ORM\JoinTable(name="fnz_ledger_log_tag",
-     *      joinColumns={@ORM\JoinColumn(name="ledger_log_id", referencedColumnName="id", onDelete="CASCADE")},
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="scheduledTransactions")
+     * @ORM\JoinTable(name="fnz_scheduled_transaction_tag",
+     *      joinColumns={@ORM\JoinColumn(name="scheduled_transaction_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")}
      * )
      * @ConfigField(

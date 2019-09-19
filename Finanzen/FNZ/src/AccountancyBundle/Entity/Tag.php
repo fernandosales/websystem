@@ -2,32 +2,34 @@
 
 namespace AccountancyBundle\Entity;
 
-use AccountancyBundle\Model\ExtendBeneficiary;
+use AccountancyBundle\Model\ExtendTag;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
+use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\UserBundle\Entity\User;
 
 /**
- * This entity represents a beneficiary of a system
+ * This entity represents a category of a system
  *
- * @ORM\Entity(repositoryClass="AccountancyBundle\Entity\Repository\BeneficiaryRepository")
- * @ORM\Table(name="fnz_beneficiary")
+ * @ORM\Entity(repositoryClass="AccountancyBundle\Entity\Repository\TagRepository")
+ * @ORM\Table(name="fnz_tag")
  * @Config(
- *      routeName="fnz.beneficiary.beneficiary_index",
- *      routeView="fnz.beneficiary.beneficiary_view",
+ *      routeName="fnz.tag.tag_index",
+ *      routeView="fnz.tag.tag_view",
  *      defaultValues={
  *          "entity"={
- *              "icon"="fa-users"
+ *              "icon"="fa-tag"
  *          },
  *          "grouping"={
  *              "groups"={"dictionary"}
  *          },
  *          "dictionary"={
  *              "virtual_fields"={"id"},
- *              "search_fields"={"firstName"},
- *              "representation_field"="firstName",
+ *              "search_fields"={"name"},
+ *              "representation_field"="name",
  *              "activity_support"="true"
  *          },
  *          "dataaudit"={"auditable"=true},
@@ -37,33 +39,72 @@ use Oro\Bundle\UserBundle\Entity\User;
  *              "field_acl_supported" = "true"
  *          },
  *          "form"={
- *              "form_type"="AccountancyBundle\Form\Type\BeneficiarySelectType",
- *              "grid_name"="beneficiaries-select-grid"
+ *              "form_type"="AccountancyBundle\Form\Type\TagSelectType",
+ *              "grid_name"="tags-select-grid"
  *          },
  *          "grid"={
- *              "default"="beneficiaries-grid",
+ *              "default"="tags-grid",
  *          }
  *      }
  * )
  * @JMS\ExclusionPolicy("ALL")
  */
-class Beneficiary extends ExtendBeneficiary
+class Tag extends ExtendTag implements
+    DatesAwareInterface
 {
 
-  /**
-   * @var Category
-   *
-   * @ORM\ManyToOne(targetEntity="Category", cascade={"persist"})
-   * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-   * @ConfigField(
-   *      defaultValues={
-   *          "dataaudit"={
-   *              "auditable"=true
-   *          }
-   *      }
-   * )
-   */
-   protected $defaultCategory;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Type("integer")
+     * @JMS\Expose
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @JMS\Type("string")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $name;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="LedgerLog", mappedBy="tags")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $ledgerLogs;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="ScheduledTransaction", mappedBy="tags")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $scheduledTransactions;
 
    /**
     * @var User
@@ -128,31 +169,6 @@ class Beneficiary extends ExtendBeneficiary
     * )
     */
    protected $createdAt;
-
-
-    /**
-     * Get the value of Default Category
-     *
-     * @return Category
-     */
-    public function getDefaultCategory()
-    {
-        return $this->defaultCategory;
-    }
-
-    /**
-     * Set the value of Default Category
-     *
-     * @param Category defaultCategory
-     *
-     * @return self
-     */
-    public function setDefaultCategory(Category $defaultCategory)
-    {
-        $this->defaultCategory = $defaultCategory;
-
-        return $this;
-    }
 
     /**
      * Get the value of Created By
@@ -219,7 +235,7 @@ class Beneficiary extends ExtendBeneficiary
      *
      * @return self
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
 
@@ -267,7 +283,7 @@ class Beneficiary extends ExtendBeneficiary
      *
      * @return self
      */
-    public function setCreatedAt($createdAt = null)
+    public function setCreatedAt(\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
 

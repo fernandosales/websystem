@@ -226,6 +226,14 @@ class Account extends ExtendAccount implements
       protected $institution;
 
       /**
+       * @ORM\OneToOne(
+       *     targetEntity="AccountancyBundle\Entity\LedgerLog",
+       *     mappedBy="account"
+       * )
+       */
+      protected $ledgerLog;
+
+      /**
        * @var User
        *
        * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
