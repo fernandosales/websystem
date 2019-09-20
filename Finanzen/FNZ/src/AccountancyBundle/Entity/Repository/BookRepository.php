@@ -1,13 +1,14 @@
 <?php
 
+
 namespace AccountancyBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Doctrine repository for Category entity.
+ * Doctrine repository for Book entity.
  */
-class CategoryRepository extends EntityRepository
+class BookRepository extends EntityRepository
 {
 
 }

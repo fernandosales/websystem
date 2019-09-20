@@ -5,7 +5,7 @@ namespace AccountancyBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Doctrine repository for AccountancyBundle\Repository\LedgerLog entity.
+ * Doctrine repository for Tag entity.
  */
 class TagRepository extends EntityRepository
 {

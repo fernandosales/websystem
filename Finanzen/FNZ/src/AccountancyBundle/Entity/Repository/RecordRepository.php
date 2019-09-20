@@ -5,9 +5,9 @@ namespace AccountancyBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Doctrine repository for Category entity.
+ * Doctrine repository for Record entity.
  */
-class CategoryRepository extends EntityRepository
+class RecordRepository extends EntityRepository
 {
 
 }

@@ -1,11 +1,13 @@
 <?php
 
+
 namespace AccountancyBundle\Entity;
 
-use AccountancyBundle\Model\ExtendTag;
+use AccountancyBundle\Model\ExtendBook;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use InstitutionBundle\Entity\Account;
 use JMS\Serializer\Annotation as JMS;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
@@ -14,24 +16,24 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\UserBundle\Entity\User;
 
 /**
- * This entity represents a category of a system
+ * This entity represents a log of a system
  *
- * @ORM\Entity(repositoryClass="AccountancyBundle\Entity\Repository\TagRepository")
- * @ORM\Table(name="fnz_tag")
+ * @ORM\Entity(repositoryClass="AccountancyBundle\Entity\Repository\BookRepository")
+ * @ORM\Table(name="fnz_book")
  * @Config(
- *      routeName="fnz.tag.tag_index",
- *      routeView="fnz.tag.tag_view",
+ *      routeName="fnz.book.book_index",
+ *      routeView="fnz.book.book_view",
  *      defaultValues={
  *          "entity"={
- *              "icon"="fa-tag"
+ *              "icon"="fa-book"
  *          },
  *          "grouping"={
  *              "groups"={"dictionary"}
  *          },
  *          "dictionary"={
  *              "virtual_fields"={"id"},
- *              "search_fields"={"name"},
- *              "representation_field"="name",
+ *              "search_fields"={"memo"},
+ *              "representation_field"="memo",
  *              "activity_support"="true"
  *          },
  *          "dataaudit"={"auditable"=true},
@@ -41,17 +43,17 @@ use Oro\Bundle\UserBundle\Entity\User;
  *              "field_acl_supported" = "true"
  *          },
  *          "form"={
- *              "form_type"="AccountancyBundle\Form\Type\TagSelectType",
- *              "grid_name"="tags-select-grid"
+ *              "form_type"="AccountancyBundle\Form\Type\BookSelectType",
+ *              "grid_name"="books-select-grid"
  *          },
  *          "grid"={
- *              "default"="tags-grid",
+ *              "default"="books-grid",
  *          }
  *      }
  * )
  * @JMS\ExclusionPolicy("ALL")
  */
-class Tag extends ExtendTag implements
+class Book extends ExtendBook implements
     DatesAwareInterface
 {
     use DatesAwareTrait;
@@ -66,39 +68,37 @@ class Tag extends ExtendTag implements
     protected $id;
 
     /**
-     * @var string
+     * @var Collection|Record[]
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @JMS\Type("string")
-     * @JMS\Expose
+     * @ORM\OneToMany(
+     *      targetEntity="AccountancyBundle\Entity\Record",
+     *      mappedBy="book",
+     *      cascade={"all"},
+     *      orphanRemoval=true
+     *)
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
      *              "auditable"=true
      *          }
-     *      }
-     * )
+     *   }
+     *)
      */
-    protected $name;
+    private $records;
 
     /**
-     * @var Collection
+     * @var Account
      *
-     * @ORM\ManyToMany(targetEntity="AccountancyBundle\Entity\Record", mappedBy="tags")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
+     * @ORM\OneToOne(targetEntity="InstitutionBundle\Entity\Account", mappedBy="book")
+     * @JMS\Exclude
      */
-    protected $records;
+    protected $account;
 
     /**
-     * @var Collection
+     * @var User
      *
-     * @ORM\ManyToMany(targetEntity="ScheduledTransaction", mappedBy="tags")
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
@@ -107,71 +107,56 @@ class Tag extends ExtendTag implements
      *      }
      * )
      */
-    protected $scheduledTransactions;
+    protected $createdBy;
 
-   /**
-    * @var User
-    *
-    * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-    * @ORM\JoinColumn(name="created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-    * @ConfigField(
-    *      defaultValues={
-    *          "dataaudit"={
-    *              "auditable"=true
-    *          }
-    *      }
-    * )
-    */
-   protected $createdBy;
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="updated_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $updatedBy;
 
-   /**
-    * @var User
-    *
-    * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-    * @ORM\JoinColumn(name="updated_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-    * @ConfigField(
-    *      defaultValues={
-    *          "dataaudit"={
-    *              "auditable"=true
-    *          }
-    *      }
-    * )
-    */
-   protected $updatedBy;
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @JMS\Type("date")
+     * @ConfigField(
+     *      defaultValues={
+     *          "entity"={
+     *              "label"="oro.ui.updated_at"
+     *          }
+     *      }
+     * )
+     */
+    protected $updatedAt;
 
-   /**
-    * @var DateTime
-    *
-    * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-    * @JMS\Type("date")
-    * @ConfigField(
-    *      defaultValues={
-    *          "entity"={
-    *              "label"="oro.ui.updated_at"
-    *          }
-    *      }
-    * )
-    */
-   protected $updatedAt;
+    /**
+     * @var bool
+     */
+    protected $updatedAtSet;
 
-   /**
-    * @var bool
-    */
-   protected $updatedAtSet;
-
-   /**
-    * @var DateTime
-    *
-    * @Doctrine\ORM\Mapping\Column(name="created_at", type="datetime", nullable=true)
-    * @ConfigField(
-    *      defaultValues={
-    *          "entity"={
-    *              "label"="oro.ui.updated_at"
-    *          }
-    *      }
-    * )
-    */
-   protected $createdAt;
+    /**
+     * @var DateTime
+     *
+     * @Doctrine\ORM\Mapping\Column(name="created_at", type="datetime", nullable=true)
+     * @ConfigField(
+     *      defaultValues={
+     *          "entity"={
+     *              "label"="oro.ui.updated_at"
+     *          }
+     *      }
+     * )
+     */
+    protected $createdAt;
 
     /**
      * Get the value of Created By
@@ -186,9 +171,8 @@ class Tag extends ExtendTag implements
     /**
      * Set the value of Created By
      *
-     * @param User createdBy
-     *
-     * @return self
+     * @param User $createdBy
+     * @return Book
      */
     public function setCreatedBy(User $createdBy)
     {
@@ -210,8 +194,7 @@ class Tag extends ExtendTag implements
     /**
      * Set the value of Updated By
      *
-     * @param User updatedBy
-     *
+     * @param User $updatedBy
      * @return self
      */
     public function setUpdatedBy(User $updatedBy)
@@ -234,8 +217,7 @@ class Tag extends ExtendTag implements
     /**
      * Set the value of Updated At
      *
-     * @param DateTime updatedAt
-     *
+     * @param DateTime|null $updatedAt
      * @return self
      */
     public function setUpdatedAt(DateTime $updatedAt = null)
@@ -282,8 +264,7 @@ class Tag extends ExtendTag implements
     /**
      * Set the value of Created At
      *
-     * @param DateTime createdAt
-     *
+     * @param DateTime|null $createdAt
      * @return self
      */
     public function setCreatedAt(DateTime $createdAt = null)
@@ -300,4 +281,6 @@ class Tag extends ExtendTag implements
     {
         return $this->updatedAtSet;
     }
+
+
 }

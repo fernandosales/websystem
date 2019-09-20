@@ -2,6 +2,8 @@
 
 namespace InstitutionBundle\Entity;
 
+use AccountancyBundle\Entity\Book;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use InstitutionBundle\Model\ExtendAccount;
 use JMS\Serializer\Annotation as JMS;
@@ -139,7 +141,7 @@ class Account extends ExtendAccount implements
     protected $minimumBalanceToNotify;
 
     /**
-     * @var \DateTime $openingDate
+     * @var DateTime $openingDate
      *
      * @ORM\Column(name="opening_date", type="datetime")
      * @ConfigField(
@@ -225,13 +227,14 @@ class Account extends ExtendAccount implements
       */
       protected $institution;
 
-      /**
-       * @ORM\OneToOne(
-       *     targetEntity="AccountancyBundle\Entity\LedgerLog",
-       *     mappedBy="account"
-       * )
-       */
-      protected $ledgerLog;
+    /**
+     * @var Book
+     *
+     * @ORM\OneToOne(targetEntity="AccountancyBundle\Entity\Book", inversedBy="account", cascade={"persist"})
+     * @ORM\JoinColumn(name="book_id", referencedColumnName="id", onDelete="SET NULL")
+     * @JMS\Exclude
+     */
+    protected $book;
 
       /**
        * @var User
@@ -264,7 +267,7 @@ class Account extends ExtendAccount implements
       protected $updatedBy;
 
       /**
-       * @var \DateTime
+       * @var DateTime
        *
        * @Doctrine\ORM\Mapping\Column(name="updated_at", type="datetime")
        * @JMS\Type("date")
@@ -426,7 +429,7 @@ class Account extends ExtendAccount implements
     /**
      * Get the value of Opening Date
      *
-     * @return \DateTime $openingDate
+     * @return DateTime $openingDate
      */
     public function getOpeningDate()
     {
@@ -436,11 +439,11 @@ class Account extends ExtendAccount implements
     /**
      * Set the value of Opening Date
      *
-     * @param \DateTime $openingDate openingDate
+     * @param DateTime $openingDate openingDate
      *
      * @return self
      */
-    public function setOpeningDate(\DateTime $openingDate)
+    public function setOpeningDate(DateTime $openingDate)
     {
         $this->openingDate = $openingDate;
 

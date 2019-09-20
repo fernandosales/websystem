@@ -2,9 +2,10 @@
 
 namespace AccountancyBundle\Entity;
 
-use AccountancyBundle\Model\ExtendLedgerLog;
+use AccountancyBundle\Model\ExtendRecord;
+use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use InstitutionBundle\Entity\Account;
 use JMS\Serializer\Annotation as JMS;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
@@ -15,11 +16,11 @@ use Oro\Bundle\UserBundle\Entity\User;
 /**
  * This entity represents a log of a system
  *
- * @ORM\Entity(repositoryClass="AccountancyBundle\Entity\Repository\LedgerLogRepository")
- * @ORM\Table(name="fnz_ledger_log")
+ * @ORM\Entity(repositoryClass="AccountancyBundle\Entity\Repository\RecordRepository")
+ * @ORM\Table(name="fnz_record")
  * @Config(
- *      routeName="fnz.ledger_log.ledger_log_index",
- *      routeView="fnz.ledger_log.ledger_log_view",
+ *      routeName="fnz.record.record_index",
+ *      routeView="fnz.record.record_view",
  *      defaultValues={
  *          "entity"={
  *              "icon"="fa-book"
@@ -41,16 +42,16 @@ use Oro\Bundle\UserBundle\Entity\User;
  *          },
  *          "form"={
  *              "form_type"="AccountancyBundle\Form\Type\LedgerLogSelectType",
- *              "grid_name"="ledger-logs-select-grid"
+ *              "grid_name"="records-select-grid"
  *          },
  *          "grid"={
- *              "default"="ledger-logs-grid",
+ *              "default"="records-grid",
  *          }
  *      }
  * )
  * @JMS\ExclusionPolicy("ALL")
  */
-class LedgerLog extends ExtendLedgerLog implements
+class Record extends ExtendRecord implements
     DatesAwareInterface
 {
     use DatesAwareTrait;
@@ -113,7 +114,7 @@ class LedgerLog extends ExtendLedgerLog implements
     protected $operation;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="date", type="date", nullable=true)
      * @ConfigField(
@@ -141,54 +142,60 @@ class LedgerLog extends ExtendLedgerLog implements
     protected $amount;
 
     /**
-    * @var Beneficiary
-    *
-    * @ORM\ManyToOne(targetEntity="Beneficiary", cascade={"persist"})
-    * @ORM\JoinColumn(name="beneficiary_id", referencedColumnName="id", onDelete="SET NULL")
-    * @ConfigField(
-    *      defaultValues={
-    *          "dataaudit"={
-    *              "auditable"=true
-    *          }
-    *      }
-    * )
-    */
+     * @var Beneficiary
+     *
+     * @ORM\ManyToOne(targetEntity="Beneficiary", cascade={"persist"})
+     * @ORM\JoinColumn(name="beneficiary_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
     protected $beneficiary;
 
     /**
-    * @var Category
-    *
-    * @ORM\ManyToOne(targetEntity="Category", cascade={"persist"})
-    * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
-    * @ConfigField(
-    *      defaultValues={
-    *          "dataaudit"={
-    *              "auditable"=true
-    *          }
-    *      }
-    * )
-    */
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Category", cascade={"persist"})
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
     protected $category;
 
     /**
-     * @var Account
+     * @var Book
      *
-     * @ORM\OneToOne(
-     *     targetEntity="InstitutionBundle\Entity\Account",
-     *     inversedBy="ledgerLog",
-     *     cascade={"ALL"},
-     *     orphanRemoval=true
+     * @ORM\ManyToOne(
+     *      targetEntity="AccountancyBundle\Entity\Book",
+     *      inversedBy="records",
+     *      cascade={"persist"}
      * )
-     * @ORM\JoinColumn(name="account_id", nullable=true, referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="book_id", referencedColumnName="id", nullable=false)
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     *)
      */
-    protected $account;
+    protected $book;
 
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="ledgerLogs")
-     * @ORM\JoinTable(name="fnz_ledger_log_tag",
-     *      joinColumns={@ORM\JoinColumn(name="ledger_log_id", referencedColumnName="id", onDelete="CASCADE")},
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="records")
+     * @ORM\JoinTable(name="fnz_record_tag",
+     *      joinColumns={@ORM\JoinColumn(name="record_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")}
      * )
      * @ConfigField(
@@ -232,7 +239,7 @@ class LedgerLog extends ExtendLedgerLog implements
     protected $updatedBy;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @JMS\Type("date")
@@ -252,7 +259,7 @@ class LedgerLog extends ExtendLedgerLog implements
     protected $updatedAtSet;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @Doctrine\ORM\Mapping\Column(name="created_at", type="datetime", nullable=true)
      * @ConfigField(
@@ -365,7 +372,7 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * Get the value of Date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -375,11 +382,11 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * Set the value of Date
      *
-     * @param \DateTime date
+     * @param DateTime date
      *
      * @return self
      */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTime $date)
     {
         $this->date = $date;
 
@@ -459,30 +466,6 @@ class LedgerLog extends ExtendLedgerLog implements
     }
 
     /**
-     * Get the value of Account
-     *
-     * @return Account
-     */
-    public function getAccount()
-    {
-        return $this->account;
-    }
-
-    /**
-     * Set the value of Account
-     *
-     * @param Account account
-     *
-     * @return self
-     */
-    public function setAccount(Account $account)
-    {
-        $this->account = $account;
-
-        return $this;
-    }
-
-    /**
      * Get the value of Created By
      *
      * @return User
@@ -533,7 +516,7 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * Get the value of Updated At
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
@@ -543,11 +526,11 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * Set the value of Updated At
      *
-     * @param \DateTime updatedAt
+     * @param DateTime updatedAt
      *
      * @return self
      */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
+    public function setUpdatedAt(DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
 
@@ -581,7 +564,7 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * Get the value of Created At
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -591,11 +574,11 @@ class LedgerLog extends ExtendLedgerLog implements
     /**
      * Set the value of Created At
      *
-     * @param \DateTime createdAt
+     * @param DateTime createdAt
      *
      * @return self
      */
-    public function setCreatedAt(\DateTime $createdAt = null)
+    public function setCreatedAt(DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
 

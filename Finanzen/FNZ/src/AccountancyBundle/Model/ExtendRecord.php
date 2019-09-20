@@ -2,7 +2,7 @@
 
 namespace AccountancyBundle\Model;
 
-class ExtendLedgerLog
+class ExtendRecord
 {
     /**
      * Constructor
