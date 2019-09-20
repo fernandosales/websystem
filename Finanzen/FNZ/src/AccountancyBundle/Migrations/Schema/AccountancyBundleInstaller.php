@@ -8,7 +8,7 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
 class AccountancyBundleInstaller implements Installation
 {
-    const LEDGER_LOG_TABLE_NAME   = 'fnz_ledger_log';
+    const RECORD_TABLE_NAME       = 'fnz_record';
     const USER_TABLE_NAME         = 'oro_user';
 
     /**
@@ -35,7 +35,7 @@ class AccountancyBundleInstaller implements Installation
      */
     protected function createLedgerLogTable(Schema $schema)
     {
-        $table = $schema->createTable(self::LEDGER_LOG_TABLE_NAME);
+        $table = $schema->createTable(self::RECORD_TABLE_NAME);
         $table->addColumn('id',                         'integer', ['notnull' => true, 'autoincrement' => true]);
         $table->addColumn('created_by_user_id',         'integer', ['notnull' => false]);
         $table->addColumn('updated_by_user_id',         'integer', ['notnull' => false]);

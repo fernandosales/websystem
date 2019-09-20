@@ -1,0 +1,29 @@
+accountancy_bundle_book:
+  resource: "@AccountancyBundle/Controller/BookController.php"
+  type: annotation
+  prefix: /book
+
+#accountancy_bundle_account:
+#  resource: "@InstitutionBundle/Controller/AccountController.php"
+#  type: annotation
+#  prefix: /account
+
+book_api_book:
+  resource: "@AccountancyBundle/Controller/Api/Rest/BookController.php"
+  type: rest
+  prefix: api/rest/{version}/
+  requirements:
+    version: latest|v1
+    _format: json
+  defaults:
+    version: latest
+
+#account_api_account:
+#  resource: "@InstitutionBundle/Controller/Api/Rest/AccountController.php"
+#  type: rest
+#  prefix: api/rest/{version}/
+#  requirements:
+#    version: latest|v1
+#    _format: json
+#  defaults:
+#    version: latest

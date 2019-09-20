@@ -1,1 +1,9 @@
+parameters:
+  fnz.accountancy.entity.book.class:                       AccountancyBundle\Entity\Book
+  fnz.accountancy.entity.category.class:                   AccountancyBundle\Entity\Category
+  fnz.accountancy.entity.record.class:                     AccountancyBundle\Entity\Record
+  fnz.accountancy.entity.tag.class:                        AccountancyBundle\Entity\Tag
+  fnz.accountancy.entity.beneficiary.class:                AccountancyBundle\Entity\Beneficiary
+  fnz.accountancy.entity.schedule_transaction.class:       AccountancyBundle\Entity\ScheduledTransaction
+
 services:

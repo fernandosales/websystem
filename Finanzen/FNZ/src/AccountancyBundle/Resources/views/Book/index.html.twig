@@ -1,0 +1,14 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set pageTitle = 'accountancy.book.entity_label'|trans %}
+
+{% block navButtons %}
+    {% if is_granted('fnz.book.book_create') %}
+        <div class="btn-group">
+            {{ UI.addButton({
+            'path': path('fnz.book.book_create'),
+            'entity_label': 'accountancy.book.entity_label'|trans
+            }) }}
+        </div>
+    {% endif %}
+{% endblock %}

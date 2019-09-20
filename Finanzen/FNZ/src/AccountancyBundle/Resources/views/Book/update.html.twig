@@ -1,0 +1,68 @@
+{% extends 'OroUIBundle:actions:update.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+{% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
+
+{% oro_title_set({params : {"%entityName%": entity.name }}) %}
+
+{% if form.vars.value.id %}
+    {% set formAction = path('fnz.book.book_update', { 'id': form.vars.value.id }) %}
+{% else %}
+    {% set formAction = path('fnz.book.book_create') %}
+{% endif %}
+
+{% block navButtons %}
+    {% if form.vars.value.id and is_granted('DELETE', form.vars.value) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('book_api_delete_book', {'id': form.vars.value.id}),
+            'dataRedirect': path('fnz.book.book_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-tag',
+            'dataId': form.vars.value.id,
+            'entity_label': 'accountancy.book.entity_label'|trans
+        }) }}
+        {{ UI.buttonSeparator() }}
+    {% endif %}
+    {{ UI.cancelButton(path('fnz.book.book_index')) }}
+    {% set html = UI.saveAndCloseButton() %}
+    {% if is_granted('fnz.book.book_update') %}
+        {% set html = html ~ UI.saveAndStayButton() %}
+    {% endif %}
+    {{ UI.dropdownSaveButton({ 'html': html }) }}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% if form.vars.value.id %}
+        {% set breadcrumbs = {
+            'entity':      form.vars.value,
+            'indexPath':   path('fnz.book.book_index'),
+            'indexLabel': 'accountancy.book.entity_label'|trans,
+            'entityTitle': form.vars.value.name
+        } %}
+        {{ parent() }}
+    {% else %}
+        {% set title = 'oro.ui.create_entity'|trans({'%entityName%': 'accountancy.book.entity_label'|trans}) %}
+        {% include 'OroUIBundle::page_title_block.html.twig' with { title: title } %}
+    {% endif %}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set id = 'book-edit' %}
+
+    {% set dataBlocks = [{
+            'title': 'accountancy.book.block.general'|trans,
+            'class': 'active',
+            'subblocks': [{
+                'title': '',
+                'data': [
+                    form_row(form.name),
+                ]
+            }]
+        }]
+    %}
+    {% set data = {
+        'formErrors': form_errors(form)? form_errors(form) : null,
+        'dataBlocks': dataBlocks,
+    } %}
+    {{ parent() }}
+{% endblock content_data %}

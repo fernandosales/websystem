@@ -1,0 +1,9 @@
+parameters:
+  fnz.accountancy.form.type.book.class:             AccountancyBundle\Form\Type\BookType
+
+services:
+
+  fnz.accountancy.form.type.book:
+    class: '%fnz.accountancy.form.type.book.class%'
+    tags:
+      - { name: form.type, alias: accountancy_book_type }

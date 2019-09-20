@@ -1,0 +1,60 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'OroAddressBundle::macros.html.twig' as address %}
+
+{% oro_title_set({params : {"%entityName%": entity.name }}) %}
+
+{% block navButtons %}
+    {% if is_granted('EDIT', entity) %}
+        {{ UI.editButton({
+            'path' : path('fnz.book.book_update', { id: entity.id }),
+            'entity_label': 'accountancy.book.entity_label'|trans
+        }) }}
+    {% endif %}
+
+    {% if is_granted('DELETE', entity) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('book_api_delete_book', {'id': entity.id}),
+            'dataRedirect': path('fnz.book.book_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-book',
+            'dataId': entity.id,
+            'entity_label': 'accountancy.book.entity_label'|trans
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity':      entity,
+        'indexPath':   path('fnz.book.book_index'),
+        'indexLabel': 'accountancy.book.entity_plural_label'|trans,
+        'entityTitle': entity.name
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+                    {{ UI.renderProperty('accountancy.book.name.label'|trans,     entity.name) }}
+                </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+        {
+            'title': 'accountancy.book.block.general'|trans,
+            'class': 'active',
+            'subblocks': [
+                { 'data' : [data] }
+            ]
+        }
+    ] %}
+
+    {% set id = 'bookView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

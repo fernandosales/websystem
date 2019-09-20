@@ -32,8 +32,8 @@ use Oro\Bundle\UserBundle\Entity\User;
  *          },
  *          "dictionary"={
  *              "virtual_fields"={"id"},
- *              "search_fields"={"memo"},
- *              "representation_field"="memo",
+ *              "search_fields"={"name"},
+ *              "representation_field"="name",
  *              "activity_support"="true"
  *          },
  *          "dataaudit"={"auditable"=true},
@@ -66,6 +66,22 @@ class Book extends ExtendBook implements
      * @JMS\Expose
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @JMS\Type("string")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $name;
 
     /**
      * @var Collection|Record[]
@@ -157,6 +173,78 @@ class Book extends ExtendBook implements
      * )
      */
     protected $createdAt;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     * @return Book
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return Book
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return Record[]|Collection
+     */
+    public function getRecords()
+    {
+        return $this->records;
+    }
+
+    /**
+     * @param Record[]|Collection $records
+     * @return Book
+     */
+    public function setRecords($records)
+    {
+        $this->records = $records;
+        return $this;
+    }
+
+    /**
+     * @return Account
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    /**
+     * @param Account $account
+     * @return Book
+     */
+    public function setAccount($account)
+    {
+        $this->account = $account;
+        return $this;
+    }
 
     /**
      * Get the value of Created By

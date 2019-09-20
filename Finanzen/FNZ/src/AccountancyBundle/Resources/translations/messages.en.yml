@@ -1,0 +1,18 @@
+accountancy:
+  menu:
+    accountancy_tab.label: Accountancy
+
+  book:
+    entity_label: Book
+    entity_plural_label: Books
+
+    block:
+      general: General
+
+    form:
+      choose: Choose a book
+
+    menu:
+      book_tab.label: Book
+
+    name.label: Name

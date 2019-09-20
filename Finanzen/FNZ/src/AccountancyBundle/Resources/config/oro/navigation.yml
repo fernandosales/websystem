@@ -1,0 +1,32 @@
+navigation:
+  menu_config:
+
+    items:
+      accountancy_tab:
+        label: 'accountancy.menu.accountancy_tab.label'
+        uri: '#'
+        position: 400
+        extras:
+          icon: fa-book
+      book_list:
+        label: 'accountancy.book.entity_plural_label'
+        route: 'fnz.book.book_index'
+        position: 200
+        extras:
+          routes: ['/^book/']
+          description: 'accountancy.book.entity_plural_label'
+
+
+    tree:
+      application_menu:
+        children:
+          accountancy_tab:
+            children:
+              book_list: ~
+
+
+  titles:
+    fnz.book.book_index: ~
+    fnz.book.book_view:  '%entityName% | Book - oro.ui.view'
+    fnz.book.book_update: '%entityName% | Book - oro.ui.edit'
+    fnz.book.book_create: 'oro.ui.create_entity'
