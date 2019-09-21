@@ -82,6 +82,22 @@ class Tag extends ExtendTag implements
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=7, nullable=true)
+     * @JMS\Type("string")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $color;
+
+    /**
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="AccountancyBundle\Entity\Record", mappedBy="tags")

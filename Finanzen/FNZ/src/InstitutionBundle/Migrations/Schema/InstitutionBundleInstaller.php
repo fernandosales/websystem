@@ -2,6 +2,7 @@
 
 namespace InstitutionBundle\Migrations\Schema;
 
+use AccountancyBundle\Migrations\Schema\AccountancyBundleInstaller;
 use Doctrine\DBAL\Schema\Schema;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
@@ -15,7 +16,6 @@ class InstitutionBundleInstaller implements Installation
     const DICTIONARY_COUNTRY_TABLE_NAME = 'oro_dictionary_country';
     const DICTIONARY_REGION_TABLE_NAME  = 'oro_dictionary_region';
 
-
     /**
      * {@inheritdoc}
      */
@@ -26,13 +26,14 @@ class InstitutionBundleInstaller implements Installation
 
     /**
      * {@inheritdoc}
+     * @throws \Doctrine\DBAL\Schema\SchemaException
      */
     public function up(Schema $schema, QueryBag $queries)
     {
         /** Tables generation **/
         $this->createInstitutionTable($schema);
         $this->createAccountTable($schema);
-        $this->createaAddressTable($schema);
+        $this->createAddressTable($schema);
 
         /** Foreign keys generation **/
         $this->addInstitutionForeignKeys($schema);
@@ -59,6 +60,9 @@ class InstitutionBundleInstaller implements Installation
         $table->addColumn('created_at',                 'datetime',['default' => NULL]);
         $table->addColumn('updated_at',                 'datetime',['default' => NULL]);
         $table->setPrimaryKey(['id']);
+        $table->addUniqueIndex(['name']);
+        $table->addUniqueIndex(['bic']);
+        $table->addUniqueIndex(['iban']);
         $table->addIndex(['address_id']);
         $table->addIndex(['created_by_user_id']);
         $table->addIndex(['updated_by_user_id']);
@@ -75,6 +79,7 @@ class InstitutionBundleInstaller implements Installation
         $table->addColumn('id',                         'integer', ['notnull' => true, 'autoincrement' => true]);
         $table->addColumn('parent_account_id',          'integer', ['notnull' => false]);
         $table->addColumn('institution_id',             'integer', ['notnull' => false]);
+        $table->addColumn('book_id',                    'integer', ['notnull' => false]);
         $table->addColumn('created_by_user_id',         'integer', ['notnull' => false]);
         $table->addColumn('updated_by_user_id',         'integer', ['notnull' => false]);
         $table->addColumn('name',                       'string',  ['notnull' => true, 'length' => 255]);
@@ -88,8 +93,12 @@ class InstitutionBundleInstaller implements Installation
         $table->addColumn('created_at',                 'datetime',[]);
         $table->addColumn('updated_at',                 'datetime',[]);
         $table->setPrimaryKey(['id']);
+        $table->addUniqueIndex(['name']);
+        $table->addUniqueIndex(['number']);
+        $table->addUniqueIndex(['book_id']);
         $table->addIndex(['parent_account_id']);
         $table->addIndex(['institution_id']);
+        $table->addIndex(['book_id']);
         $table->addIndex(['created_by_user_id']);
         $table->addIndex(['updated_by_user_id']);
     }
@@ -99,7 +108,7 @@ class InstitutionBundleInstaller implements Installation
      *
      * @param Schema $schema
      */
-    protected function createaAddressTable(Schema $schema)
+    protected function createAddressTable(Schema $schema)
     {
         $table = $schema->createTable(self::ADDRESS_TABLE_NAME);
         $table->addColumn('id',                         'integer', ['notnull' => true, 'autoincrement' => true]);
@@ -128,6 +137,7 @@ class InstitutionBundleInstaller implements Installation
      * Add fnz_institution foreign keys.
      *
      * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
      */
     public function addInstitutionForeignKeys(Schema $schema)
     {
@@ -136,7 +146,7 @@ class InstitutionBundleInstaller implements Installation
             $schema->getTable(self::ADDRESS_TABLE_NAME),
             ['address_id'],
             ['id'],
-            ['onDelete' => 'CASCADE', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => null, 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::USER_TABLE_NAME),
@@ -156,21 +166,28 @@ class InstitutionBundleInstaller implements Installation
      * Add fnz_account foreign keys.
      *
      * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
      */
     public function addAccountForeignKeys(Schema $schema)
     {
         $table = $schema->getTable(self::ACCOUNT_TABLE_NAME);
         $table->addForeignKeyConstraint(
-          $schema->getTable(self::INSTITUTION_TABLE_NAME),
-          ['institution_id'],
-          ['id'],
-          ['onDelete' => 'SET NULL', 'onUpdate' => null]
+            $schema->getTable(self::INSTITUTION_TABLE_NAME),
+            ['institution_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
-          $schema->getTable(self::ACCOUNT_TABLE_NAME),
-          ['parent_account_id'],
-          ['id'],
-          ['onDelete' => 'SET NULL', 'onUpdate' => null]
+            $schema->getTable(self::ACCOUNT_TABLE_NAME),
+            ['parent_account_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(AccountancyBundleInstaller::BOOK_TABLE_NAME),
+            ['book_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::USER_TABLE_NAME),
@@ -190,6 +207,7 @@ class InstitutionBundleInstaller implements Installation
      * Add fnz_address foreign keys.
      *
      * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
      */
     protected function addAddressForeignKeys(Schema $schema)
     {

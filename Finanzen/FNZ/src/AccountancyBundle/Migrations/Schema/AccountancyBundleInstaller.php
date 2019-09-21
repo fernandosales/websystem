@@ -29,6 +29,7 @@ class AccountancyBundleInstaller implements Installation
 
     /**
      * {@inheritdoc}
+     * @throws \Doctrine\DBAL\Schema\SchemaException
      */
     public function up(Schema $schema, QueryBag $queries)
     {
@@ -41,6 +42,15 @@ class AccountancyBundleInstaller implements Installation
         $this->createBookTable($schema);
         $this->createBeneficiaryTable($schema);
         $this->createCategoryTable($schema);
+
+        /** Foreign keys generation **/
+        $this->addRecordForeignKeys($schema);
+        $this->addTagForeignKeys($schema);
+        $this->addRecordTagForeignKeys($schema);
+        $this->addScheduledTransactionTagForeignKeys($schema);
+        $this->addBookForeignKeys($schema);
+        $this->addBeneficiaryForeignKeys($schema);
+        $this->addCategoryForeignKeys($schema);
     }
 
     /**
@@ -106,7 +116,7 @@ class AccountancyBundleInstaller implements Installation
     }
 
     /**
-     * Create fnz_beneficiary table
+     * Create fnz_scheduled_transaction table
      *
      * @param Schema $schema
      */
@@ -122,10 +132,11 @@ class AccountancyBundleInstaller implements Installation
         $table->addColumn('name',                       'string',  ['notnull' => false, 'length' =>  255]);
         $table->addColumn('memo',                       'string',  ['notnull' => true,  'length' => 1000]);
         $table->addColumn('amount',                     'decimal', ['notnull' => false, 'scale'  =>    4, 'precision' => 19, 'default' => NULL]);
-        $table->addColumn('frequency',                  'integer', ['notnull' => false, 'length' =>   11]);
-        $table->addColumn('frequency_type',             'integer', ['notnull' => false, 'length' =>    3]);
-        $table->addColumn('status',                     'integer', ['notnull' => false, 'length' =>    3]);
-        $table->addColumn('operation',                  'integer', ['notnull' => false, 'length' =>    3]);
+        $table->addColumn('payment_method',             'decimal', ['notnull' => false, 'scale'  =>    4, 'precision' => 19, 'default' => NULL]);
+        $table->addColumn('frequency',                  'integer', ['notnull' => false]);
+        $table->addColumn('frequency_type',             'integer', ['notnull' => false]);
+        $table->addColumn('status',                     'integer', ['notnull' => false]);
+        $table->addColumn('operation',                  'integer', ['notnull' => false]);
         $table->addColumn('is_approximate',             'boolean', ['notnull' => false]);
         $table->addColumn('is_last_day_of_the_month',   'boolean', ['notnull' => false]);
         $table->addColumn('is_register_automatic',      'boolean', ['notnull' => false]);
@@ -141,7 +152,6 @@ class AccountancyBundleInstaller implements Installation
         $table->addIndex(['created_by_user_id']);
         $table->addIndex(['updated_by_user_id']);
     }
-
 
     /**
      * Create fnz_scheduled_transaction_tag table
@@ -237,19 +247,19 @@ class AccountancyBundleInstaller implements Installation
             $schema->getTable(self::BOOK_TABLE_NAME),
             ['book_id'],
             ['id'],
-            ['onDelete' => 'RESTRICT', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => null, 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::BENEFICIARY_TABLE_NAME),
             ['beneficiary_id'],
             ['id'],
-            ['onDelete' => 'SET NULL', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::CATEGORY_TABLE_NAME),
             ['category_id'],
             ['id'],
-            ['onDelete' => 'CASCADE', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => 'CASCADE', 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::USER_TABLE_NAME),
@@ -324,19 +334,19 @@ class AccountancyBundleInstaller implements Installation
             $schema->getTable(InstitutionBundleInstaller::ACCOUNT_TABLE_NAME),
             ['account_id'],
             ['id'],
-            ['onDelete' => 'SET NULL', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::BENEFICIARY_TABLE_NAME),
             ['beneficiary_id'],
             ['id'],
-            ['onDelete' => 'RESTRICT', 'onUpdate' => 'SET NULL']
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::CATEGORY_TABLE_NAME),
             ['category_id'],
             ['id'],
-            ['onDelete' => 'SET NULL', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::USER_TABLE_NAME),
@@ -388,7 +398,7 @@ class AccountancyBundleInstaller implements Installation
             $schema->getTable(self::CATEGORY_TABLE_NAME),
             ['category_id'],
             ['id'],
-            ['onDelete' => 'RESTRICT', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => null, 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::USER_TABLE_NAME),
@@ -417,7 +427,7 @@ class AccountancyBundleInstaller implements Installation
             $schema->getTable(self::CATEGORY_TABLE_NAME),
             ['parent_category_id'],
             ['id'],
-            ['onDelete' => 'RESTRICT', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => null, 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::USER_TABLE_NAME),
@@ -446,13 +456,13 @@ class AccountancyBundleInstaller implements Installation
             $schema->getTable(self::SCHEDULED_TRANSACTION_TABLE_NAME),
             ['scheduled_transaction_id'],
             ['id'],
-            ['onDelete' => 'CASCADE', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => 'CASCADE', 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
             $schema->getTable(self::TAG_TABLE_NAME),
             ['tag_id'],
             ['id'],
-            ['onDelete' => 'CASCADE', 'onUpdate' => 'RESTRICT']
+            ['onDelete' => 'CASCADE', 'onUpdate' => null]
         );
     }
 
