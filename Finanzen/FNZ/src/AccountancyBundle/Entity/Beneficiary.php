@@ -3,6 +3,7 @@
 namespace AccountancyBundle\Entity;
 
 use AccountancyBundle\Model\ExtendBeneficiary;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
@@ -64,6 +65,25 @@ class Beneficiary extends ExtendBeneficiary
    * )
    */
    protected $defaultCategory;
+
+    /**
+     * @var Collection|Record[]
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="AccountancyBundle\Entity\Record",
+     *      mappedBy="beneficiary",
+     *      cascade={"all"},
+     *      orphanRemoval=true
+     *)
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *   }
+     *)
+     */
+    private $records;
 
    /**
     * @var User

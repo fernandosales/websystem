@@ -5,6 +5,7 @@ namespace AccountancyBundle\Entity;
 
 use AccountancyBundle\Model\ExtendBook;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use InstitutionBundle\Entity\Account;
@@ -174,6 +175,12 @@ class Book extends ExtendBook implements
      */
     protected $createdAt;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->records = new ArrayCollection();
+    }
+
     /**
      * @return mixed
      */
@@ -225,6 +232,39 @@ class Book extends ExtendBook implements
     public function setRecords($records)
     {
         $this->records = $records;
+        return $this;
+    }
+
+    /**
+     * Add record
+     *
+     * @param Record $record
+     *
+     * @return Book
+     */
+    public function addRecord(Record $record)
+    {
+        if (!$this->records->contains($record)) {
+            $record->setBook($this);
+            $this->records[] = $record;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove record
+     *
+     * @param Record $record
+     *
+     * @return Book
+     */
+    public function removeRecord(Record $record)
+    {
+        if ($this->records->contains($record)) {
+            $this->records->removeElement($record);
+        }
+
         return $this;
     }
 

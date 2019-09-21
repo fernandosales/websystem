@@ -81,6 +81,22 @@ class ScheduledTransaction extends ExtendScheduledTransaction implements
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="memo", type="string", length=1000, nullable=true)
+     * @JMS\Type("string")
+     * @JMS\Expose
+     * @ConfigField(
+     *      defaultValues={
+     *          "dataaudit"={
+     *              "auditable"=true
+     *          }
+     *      }
+     * )
+     */
+    protected $memo;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="frequency", type="integer", length=3, nullable=true)
@@ -180,7 +196,7 @@ class ScheduledTransaction extends ExtendScheduledTransaction implements
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_process_last_day_of_month", type="boolean", nullable=true)
+     * @ORM\Column(name="is_last_day_of_the_month", type="boolean", nullable=true)
      * @JMS\Type("boolean")
      * @JMS\Expose
      * @ConfigField(

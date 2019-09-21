@@ -1,9 +1,21 @@
 parameters:
-  fnz.accountancy.form.type.book.class:             AccountancyBundle\Form\Type\BookType
+  fnz.accountancy.form.type.book.class:              AccountancyBundle\Form\Type\BookType
+  fnz.accountancy.form.type.add_new_record.class:    AccountancyBundle\Form\Type\AddNewRecordType
+  fnz.accountancy.form.type.category_select.class:   AccountancyBundle\Form\Type\CategorySelectType
 
 services:
 
   fnz.accountancy.form.type.book:
     class: '%fnz.accountancy.form.type.book.class%'
     tags:
-      - { name: form.type, alias: accountancy_book_type }
+      - { name: form.type, alias: fnz_accountancy_book_type }
+
+  fnz.accountancy.form.type.add_new_record:
+    class: '%fnz.accountancy.form.type.add_new_record.class%'
+    tags:
+      - { name: form.type, alias: fnz_accountancy_add_new_record_type }
+
+  fnz.accountancy.form.type.category_select:
+    class: '%fnz.accountancy.form.type.category_select.class%'
+    tags:
+      - { name: form.type, alias: fnz_accountancy_category_select_type }

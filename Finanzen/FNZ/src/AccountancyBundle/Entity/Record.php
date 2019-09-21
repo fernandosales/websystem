@@ -68,7 +68,7 @@ class Record extends ExtendRecord implements
     /**
      * @var string
      *
-     * @ORM\Column(name="memo", type="string", length=255, nullable=true)
+     * @ORM\Column(name="memo", type="string", length=1000, nullable=true)
      * @JMS\Type("string")
      * @JMS\Expose
      * @ConfigField(
@@ -144,7 +144,10 @@ class Record extends ExtendRecord implements
     /**
      * @var Beneficiary
      *
-     * @ORM\ManyToOne(targetEntity="Beneficiary", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Beneficiary",
+     *      inversedBy="records",
+     *      cascade={"persist"}
+     * )
      * @ORM\JoinColumn(name="beneficiary_id", referencedColumnName="id", onDelete="SET NULL")
      * @ConfigField(
      *      defaultValues={
@@ -272,6 +275,11 @@ class Record extends ExtendRecord implements
      */
     protected $createdAt;
 
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Get the value of Id
@@ -464,6 +472,44 @@ class Record extends ExtendRecord implements
 
         return $this;
     }
+
+    /**
+     * @return Book
+     */
+    public function getBook()
+    {
+        return $this->book;
+    }
+
+    /**
+     * @param Book $book
+     * @return Record
+     */
+    public function setBook($book)
+    {
+        $this->book = $book;
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param Collection $tags
+     * @return Record
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+        return $this;
+    }
+
+
 
     /**
      * Get the value of Created By

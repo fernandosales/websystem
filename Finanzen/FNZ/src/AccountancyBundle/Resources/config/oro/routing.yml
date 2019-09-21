@@ -3,6 +3,11 @@ accountancy_bundle_book:
   type: annotation
   prefix: /book
 
+accountancy_bundle_category:
+  resource: "@AccountancyBundle/Controller/CategoryController.php"
+  type: annotation
+  prefix: /category
+
 #accountancy_bundle_account:
 #  resource: "@InstitutionBundle/Controller/AccountController.php"
 #  type: annotation
@@ -18,12 +23,14 @@ book_api_book:
   defaults:
     version: latest
 
-#account_api_account:
-#  resource: "@InstitutionBundle/Controller/Api/Rest/AccountController.php"
-#  type: rest
-#  prefix: api/rest/{version}/
-#  requirements:
-#    version: latest|v1
-#    _format: json
-#  defaults:
-#    version: latest
+category_api_category:
+  resource: "@AccountancyBundle/Controller/Api/Rest/CategoryController.php"
+  type: rest
+  prefix: api/rest/{version}/
+  requirements:
+    version: latest|v1
+    _format: json
+  defaults:
+    version: latest
+
+

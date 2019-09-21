@@ -7,3 +7,12 @@ parameters:
   fnz.accountancy.entity.schedule_transaction.class:       AccountancyBundle\Entity\ScheduledTransaction
 
 services:
+
+  fnz.accountancy.category_search_handler:
+    parent: oro_form.autocomplete.search_handler
+    public: yes
+    arguments:
+      - '%fnz.accountancy.entity.category.class%'
+      - ["name"]
+    tags:
+      - { name: oro_form.autocomplete.search_handler, alias: fnz_categories, acl_resource: category_view }

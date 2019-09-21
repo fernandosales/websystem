@@ -8,10 +8,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class BookType extends AbstractType
+class CategoryType extends AbstractType
 {
-    const NAME =       'fnz_accountancy_book_type';
-    const DATA_CLASS = 'AccountancyBundle\Entity\Book';
+    const NAME =       'fnz_accountancy_category_type';
+    const DATA_CLASS = 'AccountancyBundle\Entity\Category';
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,7 +19,7 @@ class BookType extends AbstractType
             ->add('name',
                   TextType::class,
                   [
-                      'label' => 'accountancy.book.name.label',
+                      'label' => 'accountancy.category.name.label',
                   ]
             )
         ;

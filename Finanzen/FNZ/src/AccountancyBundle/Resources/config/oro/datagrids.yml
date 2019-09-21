@@ -1,6 +1,10 @@
 datagrids:
+
   books-grid:
+    options:
+      entityHint: books
     extended_entity_name: '%fnz.accountancy.entity.book.class%'
+
     source:
       acl_resource: fnz.book.book_view
       type: orm
@@ -9,9 +13,23 @@ datagrids:
           - b
         from:
           - { table: AccountancyBundle:Book, alias: b }
+
     columns:
       name:
         label: accountancy.book.name.label
+
+    sorters:
+      columns:
+        name:
+          data_name: b.name
+      default:
+        name: ASC
+    filters:
+      columns:
+        name:
+          type: string
+          data_name: b.name
+
     properties:
       id: ~
       view_link:
@@ -29,17 +47,7 @@ datagrids:
         route: book_api_delete_book
         params:
           - id
-    sorters:
-      columns:
-        name:
-          data_name: b.name
-      default:
-        name: ASC
-    filters:
-      columns:
-        name:
-          type: string
-          data_name: b.name
+
     actions:
       view:
         type:          navigate
@@ -60,3 +68,122 @@ datagrids:
         link:          delete_link
         icon:          trash
         acl_resource:  fnz.book.book_delete
+
+  categories-grid:
+    options:
+      entityHint: categories
+    extended_entity_name: '%fnz.accountancy.entity.category.class%'
+
+    source:
+      acl_resource: fnz.category.category_view
+      type: orm
+      query:
+        select:
+          - c
+        from:
+          - { table: AccountancyBundle:Category, alias: c }
+
+    columns:
+      name:
+        label: accountancy.category.name.label
+
+    sorters:
+      columns:
+        name:
+          data_name: c.name
+      default:
+        name: ASC
+    filters:
+      columns:
+        name:
+          type: string
+          data_name: c.name
+
+    properties:
+      id: ~
+      view_link:
+        type: url
+        route: fnz.category.category_view
+        params:
+          - id
+      update_link:
+        type: url
+        route: fnz.category.category_update
+        params:
+          - id
+#      delete_link:
+#        type: url
+#        route: category_api_delete_category
+#        params:
+#          - id
+
+    actions:
+      view:
+        type:          navigate
+        label:         View
+        link:          view_link
+        icon:          eye-open
+        acl_resource:  fnz.category.category_view
+        rowAction:     true
+      update:
+        type:          navigate
+        label:         Update
+        link:          update_link
+        icon:          edit
+        acl_resource:  fnz.category.category_update
+#      delete:
+#        type:          delete
+#        label:         Delete
+#        link:          delete_link
+#        icon:          trash
+#        acl_resource:  fnz.category.category_delete
+
+
+  book-view-records-grid:
+    extended_entity_name: '%fnz.accountancy.entity.record.class%'
+
+    source:
+      type: orm
+      query:
+        select:
+          - r
+        from:
+          - { table: AccountancyBundle:Record, alias: r }
+        where:
+          and:
+            - r.book = :book_id
+      bind_parameters:
+        -
+          name:  book_id
+          default: null
+
+    columns:
+      memo:
+        label: accountancy.record.memo.label
+      operation:
+        label: accountancy.record.operation.label
+      amount:
+        llabel: accountancy.record.amount.label
+
+    sorters:
+      columns:
+        memo:
+          data_name: r.memo
+        operation:
+          data_name: r.operation
+        amount:
+          data_name: r.amount
+      default:
+        memo: ASC
+
+    filters:
+      columns:
+        memo:
+          type: string
+          data_name: r.name
+        operation:
+          type: number
+          data_name: r.model
+        amount:
+          type: number
+          data_name: r.amount

@@ -8,6 +8,7 @@ accountancy:
 
     block:
       general: General
+      records: Records
 
     form:
       choose: Choose a book
@@ -15,4 +16,23 @@ accountancy:
     menu:
       book_tab.label: Book
 
+    actions:
+      fnz_book_add_new_record:
+        label: Add New Record
+        title: Add New Record
+        message:
+          success: Added new record successfully
+
     name.label: Name
+
+  record:
+    entity_label: Record
+    entity_plural_label: Records
+
+    memo.label: Memo
+    amount.label: Amount
+    operation.label: Operation
+    category.label: Category
+    date:
+      label: Date
+      placeholder: Choose a date

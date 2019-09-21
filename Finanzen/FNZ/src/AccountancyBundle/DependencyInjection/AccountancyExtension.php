@@ -15,5 +15,6 @@ class AccountancyExtension extends Extension
         $loader->load('services.yml');
         $loader->load('services_api.yml');
         $loader->load('form.yml');
+        $loader->load('managers.yml');
     }
 }

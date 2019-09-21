@@ -1,0 +1,69 @@
+operations:
+  fnz_book_add_new_record:
+    acl_resource: EDIT
+    label: accountancy.book.actions.fnz_book_add_new_record.label
+    routes:
+      - fnz.book.book_view
+    button_options:
+      icon: fa-plus
+    order: 100
+    frontend_options:
+      template: AccountancyBundle:Action:addNewRecord.html.twig
+      title: 'accountancy.book.actions.fnz_book_add_new_record.title'
+      options:
+        width: 500
+        modal: false
+        stateEnabled: false
+        incrementalPosition: false
+        allowMaximize: false
+        allowMinimize: false
+    entities:
+        - AccountancyBundle\Entity\Book
+    attributes:
+      record:
+        label: record
+        type: entity
+        options:
+          class: AccountancyBundle\Entity\Record
+    form_options:
+      attribute_fields:
+        record:
+          form_type: AccountancyBundle\Form\Type\AddNewRecordType
+          options:
+            required: true
+      attribute_default_values:
+        record:
+          $.record
+    form_init:
+      - '@create_object':
+          class: AccountancyBundle\Entity\Record
+          attribute: $.record
+      - '@assign_value': [$.record.book, $.data]
+    actions:
+      - '@run_action_group':
+          action_group: fnz_book_add_new_record
+          parameters_mapping:
+            data: $.data
+            record: $.record
+          results:
+            result: $.resultAddNewRecord
+      - '@flash_message':
+          conditions:
+            '@equal': [$.result, true]
+          message: accountancy.book.actions.fnz_book_add_new_record.message.success
+          type: 'success'
+
+action_groups:
+  fnz_book_add_new_record:
+      parameters:
+        data:
+          type: AccountancyBundle\Entity\Book
+        record:
+          type: AccountancyBundle\Entity\Record
+      acl_resource: [CREATE, entity:AccountancyBundle\Entity\Record]
+      actions:
+        - '@call_service_method':
+            service: fnz.accountancy.book.manager.book_manager
+            method: addNewRecord
+            method_parameters: [$.data, $.record]
+            attribute: $.resultAddNewRecord

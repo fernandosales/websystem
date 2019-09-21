@@ -10,3 +10,11 @@ services:
        - '%fnz.accountancy.entity.book.class%'
        - "@doctrine.orm.entity_manager"
 
+  fnz.accountancy.category_manager.api:
+    class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    parent: oro_soap.manager.entity_manager.abstract
+    public: true
+    arguments:
+      - '%fnz.accountancy.entity.category.class%'
+      - "@doctrine.orm.entity_manager"
+

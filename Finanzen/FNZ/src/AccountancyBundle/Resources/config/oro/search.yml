@@ -1,0 +1,14 @@
+search:
+  AccountancyBundle\Entity\Category:
+    alias:                      fnz_categories
+    title_fields:               [name]
+    search_template:            OroSearchBundle:Search:searchResultItem.html.twig
+    route:
+      name:                     category_view
+      parameters:
+        id:                       id
+    fields:
+      -
+        name:                   name
+        target_type:            text
+        target_fields:          [name]

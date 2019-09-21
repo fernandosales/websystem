@@ -1,0 +1,14 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set pageTitle = 'accountancy.category.entity_label'|trans %}
+
+{% block navButtons %}
+    {% if is_granted('fnz.category.category_create') %}
+        <div class="btn-group">
+            {{ UI.addButton({
+            'path': path('fnz.category.category_create'),
+            'entity_label': 'accountancy.category.entity_label'|trans
+            }) }}
+        </div>
+    {% endif %}
+{% endblock %}

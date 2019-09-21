@@ -1,0 +1,9 @@
+parameters:
+  fnz.accountancy.manager.book.class:                       AccountancyBundle\Manager\BookManager
+
+services:
+  fnz.accountancy.book.manager.book_manager:
+    public: true
+    class: '%fnz.accountancy.manager.book.class%'
+    arguments:
+      - '@doctrine'

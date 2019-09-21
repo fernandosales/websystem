@@ -1,0 +1,29 @@
+{% extends 'OroActionBundle:Operation:form.html.twig' %}
+{% block form %}
+    {% set frontendOptions = operation.definition.frontendOptions.options %}
+    {% set pageComponentOptions = {} %}
+    <div class="widget-content add-product-widget">
+        {% set attr = {'id': form.vars.id, 'data-collect': 'true', 'class': 'form-dialog'} %}
+        {% if frontendOptions.form_page_component_module is defined %}
+            {% set attr = attr|merge({'data-page-component-module': frontendOptions.form_page_component_module}) %}
+        {% endif %}
+        {{ form_start(form, {'action': app.request.uri, 'attr': attr}) }}
+        <fieldset class="form-horizontal">
+            {{ form_row(form.record.memo ) }}
+            {{ form_row(form.record.date ) }}
+            {{ form_row(form.record.amount ) }}
+            {{ form_row(form.record.category ) }}
+        </fieldset>
+
+        <div class="hidden">
+            {{ form_rest(form) }}
+        </div>
+
+        <div class="widget-actions">
+            <button type="reset" class="btn">{{ 'Cancel'|trans }}</button>
+            <button type="submit" class="btn btn-success">{{ 'Save'|trans }}</button>
+        </div>
+        {{ form_end(form) }}
+        {{ oro_form_js_validation(form) }}
+    </div>
+{% endblock %}

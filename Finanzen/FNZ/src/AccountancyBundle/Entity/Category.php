@@ -52,6 +52,7 @@ use Oro\Bundle\UserBundle\Entity\User;
 class Category extends ExtendCategory implements
     DatesAwareInterface
 {
+    use DatesAwareTrait;
 
   /**
    * @ORM\Id
