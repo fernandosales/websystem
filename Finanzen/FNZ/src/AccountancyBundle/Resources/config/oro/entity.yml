@@ -1,0 +1,5 @@
+oro_entity:
+  entity_aliases:
+    AccountancyBundle\Entity\Tag:
+      alias:        fnztag
+      plural_alias: fnztags
