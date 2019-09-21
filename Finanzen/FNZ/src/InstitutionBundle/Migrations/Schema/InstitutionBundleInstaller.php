@@ -35,6 +35,9 @@ class InstitutionBundleInstaller implements Installation
         $this->createAccountTable($schema);
         $this->createAddressTable($schema);
 
+        /** Extern tables */
+        AccountancyBundleInstaller::createBookTable($schema);
+
         /** Foreign keys generation **/
         $this->addInstitutionForeignKeys($schema);
         $this->addAccountForeignKeys($schema);

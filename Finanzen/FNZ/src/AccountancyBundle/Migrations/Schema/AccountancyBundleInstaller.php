@@ -39,7 +39,7 @@ class AccountancyBundleInstaller implements Installation
         $this->createRecordTagTable($schema);
         $this->createScheduledTransactionTable($schema);
         $this->createScheduledTransactionTagTable($schema);
-        $this->createBookTable($schema);
+//        $this->createBookTable($schema);
         $this->createBeneficiaryTable($schema);
         $this->createCategoryTable($schema);
 
