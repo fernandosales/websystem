@@ -102,8 +102,7 @@ class AccountancyBundleInstaller implements Installation
         $table = $schema->createTable(self::RECORD_TAG_TABLE_NAME);
         $table->addColumn('record_id',                  'integer', ['notnull' => true]);
         $table->addColumn('tag_id',                     'integer', ['notnull' => true]);
-        $table->setPrimaryKey(['record_id']);
-        $table->setPrimaryKey(['tag_id']);
+        $table->setPrimaryKey(['record_id', 'tag_id']);
     }
 
     /**
@@ -154,8 +153,7 @@ class AccountancyBundleInstaller implements Installation
         $table = $schema->createTable(self::SCHEDULED_TRANSACTION_TAG_TABLE_NAME);
         $table->addColumn('scheduled_transaction_id',   'integer', ['notnull' => true]);
         $table->addColumn('tag_id',                     'integer', ['notnull' => true]);
-        $table->setPrimaryKey(['scheduled_transaction_id']);
-        $table->setPrimaryKey(['tag_id']);
+        $table->setPrimaryKey(['scheduled_transaction_id', 'tag_id']);
     }
 
     /**
