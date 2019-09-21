@@ -82,7 +82,6 @@ class InstitutionBundleInstaller implements Installation
         $table->addColumn('currency',                   'string',  ['notnull' => false, 'length' =>   3, 'default' => NULL]);
         $table->addColumn('opening_date',               'datetime',[]);
         $table->addColumn('opening_balance',            'decimal', ['notnull' => false,'scale'  =>   4, 'precision' => 19, 'default' => NULL]);
-        $table->addColumn('minimum_balance_to_notify',  'decimal', ['notnull' => false,'scale'  =>   4, 'precision' => 19, 'default' => NULL]);
         $table->addColumn('accounting_type',            'integer', ['notnull' => false]);
         $table->addColumn('type',                       'integer', ['notnull' => false]);
         $table->addColumn('is_favorite',                'boolean', ['notnull' => false]);

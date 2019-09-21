@@ -2,6 +2,7 @@
 
 namespace AccountancyBundle\Migrations\Schema;
 
+use InstitutionBundle\Migrations\Schema\InstitutionBundleInstaller;
 use Doctrine\DBAL\Schema\Schema;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
@@ -83,6 +84,7 @@ class AccountancyBundleInstaller implements Installation
         $table->addColumn('created_by_user_id',         'integer', ['notnull' => false]);
         $table->addColumn('updated_by_user_id',         'integer', ['notnull' => false]);
         $table->addColumn('name',                       'string',  ['notnull' => true, 'length' => 255]);
+        $table->addColumn('color',                      'string',  ['notnull' => true, 'length' =>   7]);
         $table->addColumn('created_at',                 'datetime',[]);
         $table->addColumn('updated_at',                 'datetime',[]);
         $table->setPrimaryKey(['id']);
@@ -224,5 +226,236 @@ class AccountancyBundleInstaller implements Installation
         $table->addIndex(['updated_by_user_id']);
     }
 
+    /**
+     * Add fnz_record foreign keys.
+     *
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addRecordForeignKeys(Schema $schema)
+    {
+        $table = $schema->getTable(self::RECORD_TABLE_NAME);
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::BOOK_TABLE_NAME),
+            ['book_id'],
+            ['id'],
+            ['onDelete' => 'RESTRICT', 'onUpdate' => 'RESTRICT']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::BENEFICIARY_TABLE_NAME),
+            ['beneficiary_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => 'RESTRICT']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::CATEGORY_TABLE_NAME),
+            ['category_id'],
+            ['id'],
+            ['onDelete' => 'CASCADE', 'onUpdate' => 'RESTRICT']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['updated_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['created_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+    }
+
+    /**
+     * Add fnz_tag foreign keys.
+     *
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addTagForeignKeys(Schema $schema)
+    {
+        $table = $schema->getTable(self::TAG_TABLE_NAME);
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['updated_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['created_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+    }
+
+    /**
+     * Add fnz_record_tag foreign keys.
+     *
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addRecordTagForeignKeys(Schema $schema)
+    {
+        $table = $schema->getTable(self::RECORD_TAG_TABLE_NAME);
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::RECORD_TABLE_NAME),
+            ['record_id'],
+            ['id'],
+            ['onDelete' => 'CASCADE', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::TAG_TABLE_NAME),
+            ['tag_id'],
+            ['id'],
+            ['onDelete' => 'CASCADE', 'onUpdate' => null]
+        );
+    }
+
+    /**
+     * Add fnz_scheduled_transaction foreign keys.
+     *
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addScheduledTransactionForeignKeys(Schema $schema)
+    {
+        $table = $schema->getTable(self::SCHEDULED_TRANSACTION_TABLE_NAME);
+        $table->addForeignKeyConstraint(
+            $schema->getTable(InstitutionBundleInstaller::ACCOUNT_TABLE_NAME),
+            ['account_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => 'RESTRICT']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::BENEFICIARY_TABLE_NAME),
+            ['beneficiary_id'],
+            ['id'],
+            ['onDelete' => 'RESTRICT', 'onUpdate' => 'SET NULL']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::CATEGORY_TABLE_NAME),
+            ['category_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => 'RESTRICT']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['updated_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['created_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+    }
+
+    /**
+     * Add fnz_book foreign keys.
+     *
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addBookForeignKeys(Schema $schema)
+    {
+        $table = $schema->getTable(self::BOOK_TABLE_NAME);
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['updated_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['created_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+    }
+
+    /**
+     * Add fnz_beneficiary foreign keys.
+     *
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addBeneficiaryForeignKeys(Schema $schema)
+    {
+        $table = $schema->getTable(self::BENEFICIARY_TABLE_NAME);
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::CATEGORY_TABLE_NAME),
+            ['category_id'],
+            ['id'],
+            ['onDelete' => 'RESTRICT', 'onUpdate' => 'RESTRICT']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['updated_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['created_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+    }
+
+    /**
+     * Add fnz_category foreign keys.
+     *
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addCategoryForeignKeys(Schema $schema)
+    {
+        $table = $schema->getTable(self::CATEGORY_TABLE_NAME);
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::CATEGORY_TABLE_NAME),
+            ['parent_category_id'],
+            ['id'],
+            ['onDelete' => 'RESTRICT', 'onUpdate' => 'RESTRICT']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['updated_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::USER_TABLE_NAME),
+            ['created_by_user_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+    }
+
+    /**
+     * Add fnz_scheduled_transaction_tag foreign keys.
+     *
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
+    public function addScheduledTransactionTagForeignKeys(Schema $schema)
+    {
+        $table = $schema->getTable(self::SCHEDULED_TRANSACTION_TAG_TABLE_NAME);
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::SCHEDULED_TRANSACTION_TABLE_NAME),
+            ['scheduled_transaction_id'],
+            ['id'],
+            ['onDelete' => 'CASCADE', 'onUpdate' => 'RESTRICT']
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable(self::TAG_TABLE_NAME),
+            ['tag_id'],
+            ['id'],
+            ['onDelete' => 'CASCADE', 'onUpdate' => 'RESTRICT']
+        );
+    }
 
 }

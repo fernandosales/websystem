@@ -46,13 +46,6 @@ class AccountType extends AbstractType
                       'label'    => 'account.opening_balance.label',
                       'required' => false,
                   ]
-              )
-            ->add('minimumBalanceToNotify',
-                  OroMoneyType::class,
-                  [
-                    'label'    => 'account.minimum_balance_to_notify.label',
-                    'currency' => false,
-                  ]
             )
             ->add('openingDate',
                   OroDateType::class,

@@ -46,7 +46,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/create", name="category_create")
+     * @Route("/create", name="fnz.category.category_create")
      * @Template("AccountancyBundle:Category:update.html.twig")
      * @Acl(
      *     id="fnz.category.category_create",

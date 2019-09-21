@@ -127,20 +127,6 @@ class Account extends ExtendAccount implements
     protected $openingBalance;
 
     /**
-     * @var double
-     *
-     * @ORM\Column(name="minimum_balance_to_notify", type="decimal", nullable=true, precision = 19, scale = 4)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
-     */
-    protected $minimumBalanceToNotify;
-
-    /**
      * @var DateTime $openingDate
      *
      * @ORM\Column(name="opening_date", type="datetime")
@@ -398,30 +384,6 @@ class Account extends ExtendAccount implements
     public function setOpeningBalance($openingBalance)
     {
         $this->openingBalance = $openingBalance;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Minimum Balance To Notify
-     *
-     * @return double
-     */
-    public function getMinimumBalanceToNotify()
-    {
-        return $this->minimumBalanceToNotify;
-    }
-
-    /**
-     * Set the value of Minimum Balance To Notify
-     *
-     * @param double minimumBalanceToNotify
-     *
-     * @return self
-     */
-    public function setMinimumBalanceToNotify($minimumBalanceToNotify)
-    {
-        $this->minimumBalanceToNotify = $minimumBalanceToNotify;
 
         return $this;
     }
