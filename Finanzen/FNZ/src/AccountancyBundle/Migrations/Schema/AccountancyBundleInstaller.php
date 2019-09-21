@@ -171,7 +171,7 @@ class AccountancyBundleInstaller implements Installation
      *
      * @param Schema $schema
      */
-    protected function createBookTable(Schema $schema)
+    public function createBookTable(Schema $schema)
     {
         $table = $schema->createTable(self::BOOK_TABLE_NAME);
         $table->addColumn('id',                         'integer', ['notnull' => true, 'autoincrement' => true]);
