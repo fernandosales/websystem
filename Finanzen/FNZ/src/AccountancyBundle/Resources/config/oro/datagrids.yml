@@ -4,7 +4,6 @@ datagrids:
     options:
       entityHint: books
     extended_entity_name: '%fnz.accountancy.entity.book.class%'
-
     source:
       acl_resource: fnz.book.book_view
       type: orm
@@ -13,11 +12,9 @@ datagrids:
           - b
         from:
           - { table: AccountancyBundle:Book, alias: b }
-
     columns:
       name:
         label: accountancy.book.name.label
-
     sorters:
       columns:
         name:
@@ -29,7 +26,6 @@ datagrids:
         name:
           type: string
           data_name: b.name
-
     properties:
       id: ~
       view_link:
@@ -47,7 +43,6 @@ datagrids:
         route: book_api_delete_book
         params:
           - id
-
     actions:
       view:
         type:          navigate
@@ -73,7 +68,6 @@ datagrids:
     options:
       entityHint: categories
     extended_entity_name: '%fnz.accountancy.entity.category.class%'
-
     source:
       acl_resource: fnz.category.category_view
       type: orm
@@ -82,11 +76,9 @@ datagrids:
           - c
         from:
           - { table: AccountancyBundle:Category, alias: c }
-
     columns:
       name:
         label: accountancy.category.name.label
-
     sorters:
       columns:
         name:
@@ -98,7 +90,6 @@ datagrids:
         name:
           type: string
           data_name: c.name
-
     properties:
       id: ~
       view_link:
@@ -111,12 +102,11 @@ datagrids:
         route: fnz.category.category_update
         params:
           - id
-#      delete_link:
-#        type: url
-#        route: category_api_delete_category
-#        params:
-#          - id
-
+      delete_link:
+        type: url
+        route: category_api_delete_category
+        params:
+          - id
     actions:
       view:
         type:          navigate
@@ -131,17 +121,15 @@ datagrids:
         link:          update_link
         icon:          edit
         acl_resource:  fnz.category.category_update
-#      delete:
-#        type:          delete
-#        label:         Delete
-#        link:          delete_link
-#        icon:          trash
-#        acl_resource:  fnz.category.category_delete
-
+      delete:
+        type:          delete
+        label:         Delete
+        link:          delete_link
+        icon:          trash
+        acl_resource:  fnz.category.category_delete
 
   book-view-records-grid:
     extended_entity_name: '%fnz.accountancy.entity.record.class%'
-
     source:
       type: orm
       query:
@@ -156,15 +144,16 @@ datagrids:
         -
           name:  book_id
           default: null
-
     columns:
       memo:
-        label: accountancy.record.memo.label
+        label:         accountancy.record.memo.label
+        type:          twig
+        frontend_type: html
+        template:      AccountancyBundle:Record:Datagrid/memo.html.twig
       operation:
         label: accountancy.record.operation.label
       amount:
         llabel: accountancy.record.amount.label
-
     sorters:
       columns:
         memo:
@@ -175,7 +164,6 @@ datagrids:
           data_name: r.amount
       default:
         memo: ASC
-
     filters:
       columns:
         memo:
@@ -187,3 +175,20 @@ datagrids:
         amount:
           type: number
           data_name: r.amount
+    properties:
+      id: ~
+      delete_link:
+        type: url
+        route: record_api_delete_record
+        params:
+          - id
+    actions:
+      delete:
+        type:          delete
+        label:         Delete
+        link:          delete_link
+        icon:          trash
+        acl_resource:  fnz.record.record_delete
+
+  categories-select-grid:
+    extends: categories-grid

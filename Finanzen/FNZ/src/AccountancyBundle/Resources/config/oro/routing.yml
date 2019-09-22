@@ -8,6 +8,11 @@ accountancy_bundle_category:
   type: annotation
   prefix: /category
 
+accountancy_bundle_record:
+  resource: "@AccountancyBundle/Controller/RecordController.php"
+  type: annotation
+  prefix: /record
+
 #accountancy_bundle_account:
 #  resource: "@InstitutionBundle/Controller/AccountController.php"
 #  type: annotation
@@ -33,4 +38,12 @@ category_api_category:
   defaults:
     version: latest
 
-
+record_api_record:
+  resource: "@AccountancyBundle/Controller/Api/Rest/RecordController.php"
+  type: rest
+  prefix: api/rest/{version}/
+  requirements:
+    version: latest|v1
+    _format: json
+  defaults:
+    version: latest

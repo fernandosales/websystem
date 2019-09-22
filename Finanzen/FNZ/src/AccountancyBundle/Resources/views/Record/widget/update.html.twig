@@ -30,9 +30,10 @@
             }
         }) }}
         <fieldset class="form-horizontal">
-            {{ form_row(form.name) }}
-            {{ form_row(form.type) }}
-            {{ form_row(form.parentCategory) }}
+            {{ form_row(form.record.amount ) }}
+            {{ form_row(form.record.date ) }}
+            {{ form_row(form.record.memo ) }}
+            {{ form_row(form.record.category ) }}
         </fieldset>
 
         <div class="hidden">

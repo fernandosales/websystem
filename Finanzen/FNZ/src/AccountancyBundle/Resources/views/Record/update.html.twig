@@ -3,29 +3,29 @@
 
 {% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
 
-{% oro_title_set({params : {"%entityName%": entity.name }}) %}
+{% oro_title_set({params : {"%entityName%": entity.id }}) %}
 
 {% if form.vars.value.id %}
-    {% set formAction = path('fnz.category.category_update', { 'id': form.vars.value.id }) %}
+    {% set formAction = path('fnz.record.record_update', { 'id': form.vars.value.id }) %}
 {% else %}
-    {% set formAction = path('fnz.category.category_create') %}
+    {% set formAction = path('fnz.record.record_create') %}
 {% endif %}
 
 {% block navButtons %}
     {% if form.vars.value.id and is_granted('DELETE', form.vars.value) %}
         {{ UI.deleteButton({
-            'dataUrl': path('category_api_delete_category', {'id': form.vars.value.id}),
-            'dataRedirect': path('fnz.category.category_index'),
+            'dataUrl': path('record_api_delete_record', {'id': form.vars.value.id}),
+            'dataRedirect': path('fnz.record.record_index'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-tag',
             'dataId': form.vars.value.id,
-            'entity_label': 'accountancy.category.entity_label'|trans
+            'entity_label': 'accountancy.record.entity_label'|trans
         }) }}
         {{ UI.buttonSeparator() }}
     {% endif %}
-    {{ UI.cancelButton(path('fnz.category.category_index')) }}
+    {{ UI.cancelButton(path('fnz.record.record_index')) }}
     {% set html = UI.saveAndCloseButton() %}
-    {% if is_granted('fnz.category.category_update') %}
+    {% if is_granted('fnz.record.record_update') %}
         {% set html = html ~ UI.saveAndStayButton() %}
     {% endif %}
     {{ UI.dropdownSaveButton({ 'html': html }) }}
@@ -35,29 +35,27 @@
     {% if form.vars.value.id %}
         {% set breadcrumbs = {
             'entity':      form.vars.value,
-            'indexPath':   path('fnz.category.category_index'),
-            'indexLabel': 'accountancy.category.entity_label'|trans,
-            'entityTitle': form.vars.value.name
+            'indexPath':   path('fnz.record.record_index'),
+            'indexLabel': 'accountancy.record.entity_label'|trans,
+            'entityTitle': form.vars.value.memo
         } %}
         {{ parent() }}
     {% else %}
-        {% set title = 'oro.ui.create_entity'|trans({'%entityName%': 'accountancy.category.entity_label'|trans}) %}
+        {% set title = 'oro.ui.create_entity'|trans({'%entityName%': 'accountancy.record.entity_label'|trans}) %}
         {% include 'OroUIBundle::page_title_block.html.twig' with { title: title } %}
     {% endif %}
 {% endblock pageHeader %}
 
 {% block content_data %}
-    {% set id = 'category-edit' %}
+    {% set id = 'record-edit' %}
 
     {% set dataBlocks = [{
-            'title': 'accountancy.category.block.general'|trans,
+            'title': 'accountancy.record.block.general'|trans,
             'class': 'active',
             'subblocks': [{
                 'title': '',
                 'data': [
-                    form_row(form.name),
-                    form_row(form.type),
-                    form_row(form.parentCategory),
+                    form_row(form.memo),
                 ]
             }]
         }]

@@ -28,7 +28,7 @@ operations:
     form_options:
       attribute_fields:
         record:
-          form_type: AccountancyBundle\Form\Type\AddNewRecordType
+          form_type: AccountancyBundle\Form\Type\RecordType
           options:
             required: true
       attribute_default_values:

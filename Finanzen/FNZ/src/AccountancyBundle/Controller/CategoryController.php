@@ -63,8 +63,8 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/widget/create", name="fnz.category.category_widget_create")
-     * @Template("AccountancyBundle:Category:widget:update.html.twig")
+     * @Route("/widget/create", name="fnz.category.category_widget_create", options={"expose" = true})
+     * @Template("AccountancyBundle:Category:update.html.twig")
      * @Acl(
      *     id="fnz.category.category_widget_create",
      *     type="entity",
@@ -76,11 +76,26 @@ class CategoryController extends Controller
      */
     public function widgetCreateAction(Request $request)
     {
-        return $this->update(new Category(), $request);
+        $category = new Category();
+        $form = $this->get('form.factory')->create(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($category);
+            $entityManager->flush();
+
+            return ['entity' => $prc, 'saved'  => true, 'form' => $form, 'updated'=>true ];
+        }
+
+        return array(
+            'entity' => $category,
+            'form' => $form->createView(),
+        );
     }
 
     /**
-     * @Route("/update/{id}", name="fnz.category.category_update", requirements={"id":"\d+"}, defaults={"id":0})
+     * @Route("/update/{id}", name="fnz.category.category_update", requirements={"id":"\d+"})
      * @Template()
      * @Acl(
      *     id="fnz.category.category_update",

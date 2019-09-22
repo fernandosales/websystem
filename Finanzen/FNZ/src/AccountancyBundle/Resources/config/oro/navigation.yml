@@ -15,6 +15,13 @@ navigation:
         extras:
           routes: ['/^book/']
           description: 'accountancy.book.entity_plural_label'
+      category_list:
+        label: 'accountancy.category.entity_plural_label'
+        route: 'fnz.category.category_index'
+        position: 200
+        extras:
+          routes: ['/^book/']
+          description: 'accountancy.category.entity_plural_label'
 
 
     tree:
@@ -23,6 +30,7 @@ navigation:
           accountancy_tab:
             children:
               book_list: ~
+              category_list: ~
 
 
   titles:
@@ -30,3 +38,8 @@ navigation:
     fnz.book.book_view:  '%entityName% | Book - oro.ui.view'
     fnz.book.book_update: '%entityName% | Book - oro.ui.edit'
     fnz.book.book_create: 'oro.ui.create_entity'
+
+    fnz.category.category_index: ~
+    fnz.category.category_view:  '%entityName% | Category - oro.ui.view'
+    fnz.category.category_update: '%entityName% | Category - oro.ui.edit'
+    fnz.category.category_create: 'oro.ui.create_entity'

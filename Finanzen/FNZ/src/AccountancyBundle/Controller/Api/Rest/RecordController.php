@@ -8,17 +8,17 @@ use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 
 /**
- * @RouteResource("category")
- * @NamePrefix("category_api_")
+ * @RouteResource("record")
+ * @NamePrefix("record_api_")
  */
-class CategoryController extends RestController
+class RecordController extends RestController
 {
 
     /**
      * Delete institution
      *
      * @Acl(
-     *      id="fnz.book.book_delete",
+     *      id="fnz.record.record_delete",
      *      type="entity",
      *      class="AccountancyBundle:Book",
      *      permission="DELETE"
@@ -39,6 +39,6 @@ class CategoryController extends RestController
 
     public function getManager()
     {
-        return $this->get('fnz.accountancy.category_manager.api');
+        return $this->get('fnz.accountancy.record_manager.api');
     }
 }

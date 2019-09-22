@@ -9,10 +9,12 @@
         {% endif %}
         {{ form_start(form, {'action': app.request.uri, 'attr': attr}) }}
         <fieldset class="form-horizontal">
-            {{ form_row(form.record.memo ) }}
-            {{ form_row(form.record.date ) }}
             {{ form_row(form.record.amount ) }}
+            {{ form_row(form.record.date ) }}
+            {{ form_row(form.record.memo ) }}
             {{ form_row(form.record.category ) }}
+            {{ form_row(form.record.operation ) }}
+
         </fieldset>
 
         <div class="hidden">

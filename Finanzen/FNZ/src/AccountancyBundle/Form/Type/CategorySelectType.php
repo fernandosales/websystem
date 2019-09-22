@@ -22,10 +22,10 @@ class CategorySelectType extends AbstractType
             [
                 self::DATA_PARAMETERS => [],
                 'autocomplete_alias' => 'fnz_categories',
-                'create_form_route'  => 'category_create',
+                'create_form_route'  => 'fnz.category.category_widget_create',
                 'configs'            => [
-                    'placeholder'             => 'fnz.accountancy.form.choose',
-                ],
+                                            'placeholder'  => 'accountancy.category.parent_category.placeholder',
+                                        ],
             ]
         );
     }

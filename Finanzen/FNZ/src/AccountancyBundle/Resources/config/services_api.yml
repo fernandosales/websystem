@@ -1,5 +1,3 @@
-
-
 services:
 
   fnz.accountancy.book_manager.api:
@@ -18,3 +16,10 @@ services:
       - '%fnz.accountancy.entity.category.class%'
       - "@doctrine.orm.entity_manager"
 
+  fnz.accountancy.record_manager.api:
+    class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    parent: oro_soap.manager.entity_manager.abstract
+    public: true
+    arguments:
+      - '%fnz.accountancy.entity.record.class%'
+      - "@doctrine.orm.entity_manager"

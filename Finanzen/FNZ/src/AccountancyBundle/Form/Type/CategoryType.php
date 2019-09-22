@@ -4,6 +4,7 @@ namespace AccountancyBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -21,6 +22,23 @@ class CategoryType extends AbstractType
                   [
                       'label' => 'accountancy.category.name.label',
                   ]
+            )
+            ->add('type',
+                 ChoiceType::class,
+                 [
+                     'label'         => 'account.type.label',
+                     'placeholder'   => 'account.type.choice.label',
+                     'choices'       => [
+                                             'accountancy.category.type.choice.revenue.label'  => 1,
+                                             'accountancy.category.type.choice.expense.label'  => 2,
+                                        ],
+                 ]
+            )
+            ->add('parentCategory',
+                CategorySelectType::class,
+                [
+                    'label'         => 'accountancy.category.parent_category.label',
+                ]
             )
         ;
     }

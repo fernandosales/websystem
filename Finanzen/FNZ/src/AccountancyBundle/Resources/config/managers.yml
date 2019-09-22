@@ -7,3 +7,9 @@ services:
     class: '%fnz.accountancy.manager.book.class%'
     arguments:
       - '@doctrine'
+
+#  fnz.accountancy.category.manager.category_manager:
+#    public: true
+#    class: '%fnz.accountancy.manager.book.class%'
+#    arguments:
+#      - '@doctrine'

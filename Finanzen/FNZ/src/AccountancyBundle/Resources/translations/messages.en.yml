@@ -29,6 +29,9 @@ accountancy:
     entity_label: Record
     entity_plural_label: Records
 
+    block:
+      general: General
+
     memo.label: Memo
     amount.label: Amount
     operation.label: Operation
@@ -36,3 +39,28 @@ accountancy:
     date:
       label: Date
       placeholder: Choose a date
+
+  category:
+    entity_label: Category
+    entity_plural_label: Categories
+
+    block:
+      general: General
+
+      form:
+        choose: Choose a book
+
+    name.label: Name
+    type:
+      label: Type
+      choice:
+        revenue.label: Revenue
+        expense.label: Expense
+
+    parent_category:
+      label: Parent Category
+      placeholder: Choose a category
+
+
+
+
